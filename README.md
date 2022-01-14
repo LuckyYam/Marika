@@ -3,7 +3,7 @@
 
 # Marika
 
-[![NPM](https://img.shields.io/badge/Available%20On-NPM-lightgrey.svg?logo=npm&logoColor=339933&labelColor=white&style=flat-square)](https://npmjs.com/package/marika)
+[![NPM](https://img.shields.io/badge/Available%20On-NPM-lightgrey.svg?logo=npm&logoColor=339933&labelColor=white&style=flat-square)](https://www.npmjs.com/package/@shineiichijo/marika)
 
 A promise based API wrapper for the unofficial [MyAnimeList API](https://jikan.moe/)
 
@@ -14,15 +14,15 @@ A promise based API wrapper for the unofficial [MyAnimeList API](https://jikan.m
 ## Installation
 
 ```sh
-npm i marika
+npm i @shineiichijo/marika
 
-yarn add marika
+yarn add @shineiichijo/marika
 ```
 
 ## 🚀 Importing
 
 ```js
-const marika = require("marika");
+const marika = require("@shineiichijo/marika");
 ```
 
 ### 💙 Anime Methods

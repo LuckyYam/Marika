@@ -1,5 +1,5 @@
 {
-  "name": "marika",
+  "name": "@shineiichijo/marika",
   "version": "1.0.0",
   "description": "An API wrapper for the unofficial MyAnimeList API jikan.moe v4",
   "main": "index.js",
