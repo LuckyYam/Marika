@@ -1,0 +1,31 @@
+{
+  "name": "marika",
+  "version": "1.0.0",
+  "description": "An API wrapper for the unofficial MyAnimeList API jikan.moe v4",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.24.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShineiIchijo/Marika.git"
+  },
+  "keywords": [
+    "anime",
+    "manga",
+    "anime-character",
+    "jikan",
+    "jikan.moe",
+    "myanimelist",
+    "MAL"
+  ],
+  "author": "Shinei Ichijo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ShineiIchijo/Marika/issues"
+  },
+  "homepage": "https://github.com/ShineiIchijo/Marika"
+}
