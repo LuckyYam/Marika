@@ -1,8 +1,9 @@
 <div align=center>
 <a href="https://github.com/ShineiIchijo/Marika"><img src="https://wallpapermemory.com/uploads/816/marika-tachibana-wallpaper-hd-1920x1080-323797.jpg" alt="chitoge" border="0"></a>
-[![NPM](https://img.shields.io/badge/Available%20On-NPM-lightgrey.svg?logo=npm&logoColor=339933&labelColor=white&style=flat-square)](https://npmjs.com/package/marika)
 
 # Marika
+
+[![NPM](https://img.shields.io/badge/Available%20On-NPM-lightgrey.svg?logo=npm&logoColor=339933&labelColor=white&style=flat-square)](https://npmjs.com/package/marika)
 
 A promise based API wrapper for the unofficial [MyAnimeList API](https://jikan.moe/)
 
