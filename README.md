@@ -21,72 +21,107 @@ yarn add @shineiichijo/marika
 
 ## 🚀 Importing
 
-```js
-const marika = require("@shineiichijo/marika");
+```ts
+import { Anime, Character, Manga } from "@shineiichijo/marika"; // const { Anime, Character, Manga } = require("@shineiichijo/marika")
+const animeClient = new Anime();
+const charaClient = new Character();
+const mangaClient = new mangaClient();
 ```
 
 ### 💙 Anime Methods
 
-```js
-await marika.getRandomAnime(); //will return random anime with info
+```ts
+await animeClient.getRandomAnime(); //will return random anime with info
 
-await marika.getAnimeById(id); //will return the info for the given anime id
+await animeClient.getAnimeById(id); //will return the info for the given anime id
 
-await marika.getAnimeCharacters(id); //will return an array of characters for the given anime id
+await animeClient.getAnimeCharacters(id); //will return characters of the given anime id
 
-await marika.getAnimeStaff(id); //will return staff list for the given anime id
+await animeClient.getAnimeStaff(id); //will return staff list for the given anime id
 
-await marika.getAnimeEpisodesById(id, episode); //will return the info for the given anime id and episode
+await animeClient.getAnimeEpisodes(id); //will return episodes list of the given anime id. You can also query the page. Example: await animeClient.getAnimeEpisodes(id, { query: page_number })
 
-await marika.getAnimeNews(id); //will return an array of anime news for the given id
+await animeClient.getAnimeEpisodeById(id, { query: episode_number }); //will return the info of the given anime id episode
 
-await marika.getAnimePictures(id); //will return an array of pictures for the given anime id
+await animeClient.getAnimeNews(id); //will return the list of anime news for the given anime id. You can also query the page. Example: await animeClient.getAnimeNews(id, { query: page_number }
 
-await marika.getAnimeStatistics(id); //will return the stats for the given anime id
+await animeClient.getAnimeForum(id); //will return the forum of the given anime id. You can also select the filter. Example: await animeClient.getAnimeForum(id, { filter: "episode" }). You can check the filters here - https://github.com/ShineiIchijo/Marika/blob/main/src/typings/searchOptions.ts#L85
 
-await marika.getAnimeRecommendations(id); //will return an array of recommendations for the given anime id
+await animeClient.getAnimeVideos(id); //will return the list of videos for the given anime id
 
-await marika.getAnimeMoreInfo(id); //will return more info for the given anime id
+await animeClient.getAnimePictures(id); //will return pictures of the given anime id
 
-await marika.getTopAnime(); //will return an array for the ranking of anime in MyAnimeList
+await animeClient.getAnimeStats(id); //will return the stats for the given anime id
+
+await animeClient.getAnimeRecommendations(id); //will return recommendations of the given anime id
+
+await animeClient.getAnimeMoreInfo(id); //will return more info for the given anime id
+
+await animeClient.getAnimeUserUpdates(id); //will return user updates of the given anime id. You can also query the page. Example: await animeClient.getAnimeUserUpdates(id, { query: page_number }
+
+await animeClient.getAnimeReviews(id); //will return reviews of the given anime id. You can also query the page. Example: await animeClient.getAnimeReviews(id, { query: page_number }
+
+await animeClient.getAnimeRelations(id); //will return relations of the given anime id
+
+await animeClient.getAnimeThemes(id); //will return themes of the given anime id
+
+await animeClient.getAnimeExternals(id); //will return externals of the given anime id
+
+await animeClient.searchAnime(query); //will search the given anime title. You can pass several options. You can check it out at here - https://github.com/ShineiIchijo/Marika/blob/main/src/typings/searchOptions.ts#L1
+
+await animeClient.getTopAnime(); //will return list for the ranking of anime in MyAnimeList. You can also query the page. Example - await animeClient.getTopAnime({ query: page_number })
 ```
 
 ### 💚 Manga Methods
 
-```js
-await marika.getRandomManga(); //will return random manga with info
+```ts
+await mangaClient.getRandomManga(); //will return random manga with info
 
-await marika.getMangaById(id); //will return the info of the given manga id
+await mangaClient.getMangaById(id); //will return the info of the given manga id
 
-await marika.getMangaCharacters(id); //will return an array of characters for the given manga id
+await mangaClient.getMangaCharacters(id); //will return characters of the given manga id
 
-await marika.getMangaNews(id); //will return an array of manga news for the given id
+await mangaClient.getMangaNews(id); //will return news of the given manga id. You can also query the page. Example: await mangaClient.getMangaNews(id, { query: page_number }
 
-await marika.getMangaPictures(id); //will return an array of pictures for the given manga id
+await mangaClient.getMangaTopics(id); //will return topics of the given Manga ID
 
-await marika.getMangaStatistics(id); //will return the stats for the given manga id
+await mangaClient.getMangaPictures(id); //will return pictures of the given manga id
 
-await marika.getMangaMoreInfo(id); //will return more info for the given manga id
+await mangaClient.getMangaStats(id); //will return the stats for the given manga id
 
-await marika.getMangaRecommendations(id); //will rerturn an array of recommendations for the given manga id
+await mangaClient.getMangaMoreInfo(id); //will return more info for the given manga id
 
-await marika.getTopManga(); //will return an array for ranking of manga in MyAnimeList
+await mangaClient.getMangaRecommendations(id); //will rerturn recommendations of the given manga id
+
+await mangaClient.getMangaUserUpdates(id); //will return user updates of the given manga id. You can also query the page. Example: await mangaClient.getMangaUserUpdates(id, { query: page_number }
+
+await mangaClient.getMangaReviews(id); //will return reviews of the given manga id. You can also query the page. Example: await mangaClient.getMangaReviews(id, { query: page_number }
+
+await mangaClient.getMangaRelations(id); //will return relations of the given manga id
+
+await mangaClient.getMangaExternal(id); //will return external of the given manga id
+
+await mangaClient.searchManga(query); //will search the given manga. You can pass several options. You can check it out at here - https://github.com/ShineiIchijo/Marika/blob/main/src/typings/searchOptions.ts#L27
+
+await mangaClient.getTopManga(); //will return list for ranking of manga in MyAnimeList. You can also query the page. Example - await mangaClient.getTopManga({ query: page_number })
 ```
 
 ### 🤍 Character Methods
 
-```js
-await marika.getRandomCharacter(); //will return random anime character with info
+```ts
+await charaClient.getRandomCharacter(); //will return random anime character with info
 
-await marika.getCharacterById(id); //will return the info for the given character id
+await charaClient.getCharacterById(id); //will return the info for the given character id
 
-await marika.getCharacterManga(id); //will return the manga for the given character id
+await charaClient.getCharacterManga(id); //will return the manga for the given character id
 
-await marika.getCharacterAnime(id); //will return the anime for the given character id
+await charaClient.getCharacterAnime(id); //will return the anime for the given character id
 
-await marika.getCharacterVoiceActors(id); //will return an array of voice actors for the given character id
+await charaClient.getCharacterVoiceActors(id); //will return the voice actors of the given character id
 
-await marika.getCharacterPictures(id); //will return an array of pictures for the given character id
+await charaClient.getCharacterPictures(id); //will return pictures of the given character id
 
-await marika.getTopCharacters(); //will return an array of ranking for characters in MyAnimeList
+await charaClient.searchCharacter(query); //will search the given character. You can also pass several options. You can check it out at here - https://github.com/ShineiIchijo/Marika/blob/main/src/typings/searchOptions.ts#L19
+
+await charaClient.getTopCharacters(); //will return ranking of characters in MyAnimeList. You can also query the page. Example - await charaClient.getTopCharacters({ query: page_number })
 ```
