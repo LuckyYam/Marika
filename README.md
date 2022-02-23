@@ -43,7 +43,7 @@ await animeClient.getAnimeEpisodes(id); //will return episodes list of the given
 
 await animeClient.getAnimeEpisodeById(id, { query: episode_number }); //will return the info of the given anime id episode
 
-await animeClient.getAnimeNews(id); //will return the list of anime news for the given anime id. You can also query the page. Example: await animeClient.getAnimeNews(id, { query: page_number }
+await animeClient.getAnimeNews(id); //will return the list of anime news for the given anime id. You can also query the page. Example: await animeClient.getAnimeNews(id, { query: page_number })
 
 await animeClient.getAnimeForum(id); //will return the forum of the given anime id. You can also select the filter. Example: await animeClient.getAnimeForum(id, { filter: "episode" }). You can check the filters here - https://github.com/ShineiIchijo/Marika/blob/main/src/typings/searchOptions.ts#L85
 
@@ -57,9 +57,9 @@ await animeClient.getAnimeRecommendations(id); //will return recommendations of 
 
 await animeClient.getAnimeMoreInfo(id); //will return more info for the given anime id
 
-await animeClient.getAnimeUserUpdates(id); //will return user updates of the given anime id. You can also query the page. Example: await animeClient.getAnimeUserUpdates(id, { query: page_number }
+await animeClient.getAnimeUserUpdates(id); //will return user updates of the given anime id. You can also query the page. Example: await animeClient.getAnimeUserUpdates(id, { query: page_number })
 
-await animeClient.getAnimeReviews(id); //will return reviews of the given anime id. You can also query the page. Example: await animeClient.getAnimeReviews(id, { query: page_number }
+await animeClient.getAnimeReviews(id); //will return reviews of the given anime id. You can also query the page. Example: await animeClient.getAnimeReviews(id, { query: page_number })
 
 await animeClient.getAnimeRelations(id); //will return relations of the given anime id
 
@@ -81,7 +81,7 @@ await mangaClient.getMangaById(id); //will return the info of the given manga id
 
 await mangaClient.getMangaCharacters(id); //will return characters of the given manga id
 
-await mangaClient.getMangaNews(id); //will return news of the given manga id. You can also query the page. Example: await mangaClient.getMangaNews(id, { query: page_number }
+await mangaClient.getMangaNews(id); //will return news of the given manga id. You can also query the page. Example: await mangaClient.getMangaNews(id, { query: page_number })
 
 await mangaClient.getMangaTopics(id); //will return topics of the given Manga ID
 
@@ -93,9 +93,9 @@ await mangaClient.getMangaMoreInfo(id); //will return more info for the given ma
 
 await mangaClient.getMangaRecommendations(id); //will rerturn recommendations of the given manga id
 
-await mangaClient.getMangaUserUpdates(id); //will return user updates of the given manga id. You can also query the page. Example: await mangaClient.getMangaUserUpdates(id, { query: page_number }
+await mangaClient.getMangaUserUpdates(id); //will return user updates of the given manga id. You can also query the page. Example: await mangaClient.getMangaUserUpdates(id, { query: page_number })
 
-await mangaClient.getMangaReviews(id); //will return reviews of the given manga id. You can also query the page. Example: await mangaClient.getMangaReviews(id, { query: page_number }
+await mangaClient.getMangaReviews(id); //will return reviews of the given manga id. You can also query the page. Example: await mangaClient.getMangaReviews(id, { query: page_number })
 
 await mangaClient.getMangaRelations(id); //will return relations of the given manga id
 
