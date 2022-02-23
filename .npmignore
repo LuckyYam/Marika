@@ -3,3 +3,5 @@ README.md
 tsconfig.json
 yarn.lock
 .github
+.eslintrc.json
+LICENSE

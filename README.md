@@ -25,7 +25,7 @@ yarn add @shineiichijo/marika
 import { Anime, Character, Manga } from "@shineiichijo/marika"; // const { Anime, Character, Manga } = require("@shineiichijo/marika")
 const animeClient = new Anime();
 const charaClient = new Character();
-const mangaClient = new mangaClient();
+const mangaClient = new Manga();
 ```
 
 ### 💙 Anime Methods
