@@ -1,7 +1,7 @@
 export interface IManga {
   mal_id: number;
   url: string;
-  imgaes: {
+  images: {
     jpg: {
       image_url: string;
       small_image_url: string;
