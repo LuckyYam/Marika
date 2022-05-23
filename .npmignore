@@ -5,3 +5,5 @@ yarn.lock
 .github
 .eslintrc.json
 LICENSE
+src
+.prettierrc.json

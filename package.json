@@ -1,6 +1,6 @@
 {
   "name": "@shineiichijo/marika",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "An API wrapper for the unofficial MyAnimeList API jikan.moe v4",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +10,8 @@
   "scripts": {
     "build": "yarn rimraf dist/ && yarn tsc",
     "lint": "eslint . --ignore-path .gitignore --ext .ts",
-    "lint:fix": "eslint . --ignore-path .gitignore --ext .ts --fix"
+    "lint:fix": "eslint . --ignore-path .gitignore --ext .ts --fix",
+    "format": "prettier --write --config .prettierrc.json \"src/**/*.ts\""
   },
   "repository": {
     "type": "git",
