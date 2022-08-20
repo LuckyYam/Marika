@@ -25,6 +25,8 @@ export interface IAnime {
             maximum_image_url: string
         }
     }
+    approved: boolean
+    titles: string[]
     title: string
     title_english: string
     title_japanese: string
@@ -111,6 +113,13 @@ export interface IAnime {
         name: string
         url: string
     }[]
+}
+
+export interface IAnimeFull extends IAnime {
+    relations: IAnimeRelations["data"]
+    theme: IAnimeThemes
+    external: IAnimeExternal["data"]
+    streaming: IAnimeExternal["data"]
 }
 
 export interface IAnimeCharacters {
