@@ -1,6 +1,7 @@
 import { utils } from './'
 import {
     IAnime,
+    IAnimeFull,
     IAnimeCharacters,
     IAnimeStaff,
     IAnimeEpisodes,
@@ -38,6 +39,23 @@ export class Anime {
         url += `/${id}`
         return await this.utils
             .fetch<{ data: IAnime }>(url)
+            .then((res) => res.data)
+            .catch((err) => {
+                throw new Error(err)
+            })
+    }
+
+    /**
+     * Method for getting the complete info of the given Anime ID
+     * @param {number} id The ID of the Anime
+     * @returns {IAnime}
+     */
+    public getAnimeFullById = async (id: number): Promise<IAnimeFull> => {
+        if (!id) throw new TypeError('Provide the id of the Anime.')
+        let url = this.utils.getUrl('anime')
+        url += `/${id}/full`
+        return await this.utils
+            .fetch<{ data: IAnimeFull }>(url)
             .then((res) => res.data)
             .catch((err) => {
                 throw new Error(err)
