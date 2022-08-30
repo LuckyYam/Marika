@@ -26,7 +26,10 @@ export interface IAnime {
         }
     }
     approved: boolean
-    titles: string[]
+    titles: {
+        type: string,
+        title: string,
+    }[],
     title: string
     title_english: string
     title_japanese: string
