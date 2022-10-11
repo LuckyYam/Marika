@@ -151,7 +151,7 @@ export interface IAnimeCharacters {
                 name: string
             }
             language: string
-        }
+        }[]
     }[]
 }
 
