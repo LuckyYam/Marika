@@ -22,7 +22,10 @@ import {
     ITopAnime,
     IAnimeSearchOptions,
     ISimpleOption,
-    TAnimeFilter
+    TAnimeFilter,
+    IAnimeSeasonNow,
+    IAnimeSeason,
+    TSeasons
 } from '../typings'
 
 export class Anime {
@@ -370,6 +373,35 @@ export class Anime {
         return await this.utils.fetch<IAnime>(url).catch((err) => {
             throw new Error(err)
         })
+    }
+
+    /**
+     * Method for getting current seasonal anime
+     * @returns {IAnimeSeasonNow}
+     */
+    public getSeasonNowAnime = async (): Promise<IAnimeSeasonNow> => {
+        let url = this.utils.getUrl('seasons')
+        url += '/now'
+        return await this.utils.fetch<IAnimeSeasonNow>(url).catch((err => {
+            throw new Error(err);
+        }))
+    }
+
+    /**
+     * Method for getting seasonal anime
+     * @param year The year that you wanna search
+     * @param {TSeasons} season The season that you wanna search
+     * @returns 
+     */
+    public getSeasonAnime = async (year: number, season: TSeasons): Promise<IAnimeSeason> => {
+        if (!year) throw new TypeError('Provide the year of the Anime season')
+        if (!season) throw new TypeError('Provide the season of the Anime')
+        let url = this.utils.getUrl('seasons')
+        url += `/${year}`
+        url += `/${season}`
+        return await this.utils.fetch<IAnimeSeason>(url).catch((err => {
+            throw new Error(err);
+        }))
     }
 
     private utils = new utils()

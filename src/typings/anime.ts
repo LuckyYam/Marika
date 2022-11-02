@@ -433,3 +433,24 @@ export interface ITopAnime {
     }
     data: IAnime[]
 }
+
+export interface IAnimeSeasonNow {
+    pagination: {
+        last_visible_page: number
+        has_next_page: boolean
+    }
+    data: IAnime[]
+}
+
+export interface IAnimeSeason {
+    pagination: {
+        last_visible_page: number
+        has_next_page: boolean,
+        items: {
+            count: number,
+            total: number,
+            has_next_page: boolean
+        }
+    }
+    data: IAnime[]
+}

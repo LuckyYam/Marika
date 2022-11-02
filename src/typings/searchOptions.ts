@@ -90,4 +90,6 @@ export type TCharacterOrder = 'mal_id' | 'name' | 'favorites'
 
 export type TSort = 'desc' | 'asc'
 
-export type TMethods = 'anime' | 'manga' | 'characters' | 'random' | 'top'
+export type TMethods = 'anime' | 'manga' | 'characters' | 'random' | 'top' | 'seasons'
+
+export type TSeasons = 'winter' | 'spring' | 'summer' | 'fall'
