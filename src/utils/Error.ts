@@ -8,6 +8,6 @@ export class MarikaError extends Error implements Change<IJikanError, 'message',
         public error: string | null,
         public report_url?: string
     ) {
-        super(`An error occurred while making the request (Status: ${status} - ${type}).Message ${jikanMessage}`)
+        super(`An error occurred while making the request (Status: ${status} - ${type}). Message: ${jikanMessage}`)
     }
 }
