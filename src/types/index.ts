@@ -1,5 +1,5 @@
 export interface IJikanError {
-    status: number
+    status: 400 | 404 | 405 | 429 | 500
     type: string
     message: string
     error: string | null
