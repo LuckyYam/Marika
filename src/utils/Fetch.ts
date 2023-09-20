@@ -14,7 +14,7 @@ export const fetch = async <T>(url: string): Promise<T> => {
     return await axios
         .get<T>(url)
         .then((res) => {
-            if (res.status !== 200 || (res as unknown as IJikanError).error) throw new Error('')
+            if (res.status !== 200 || (res.data as IJikanError).error !== undefined) throw new Error('')
             return res.data
         })
         .catch((err: Error & { response: AxiosResponse<IJikanError> }) => throwError(err))
