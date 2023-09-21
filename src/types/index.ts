@@ -311,3 +311,4 @@ export interface INewsResponse {
 
 export * from './pagination'
 export * from './anime'
+export * from './characters'
