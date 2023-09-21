@@ -1,3 +1,4 @@
+import { CacheOptions } from 'axios-cache-interceptor'
 import { fetch, getQueryString, getURL, getTypeErrorMessage } from '../../utils'
 import {
     IAnime,
@@ -27,6 +28,15 @@ import {
 } from '../../types'
 
 export class Anime {
+    #cacheConfig?: CacheOptions
+    /**
+     * Constructs an instance of the `anime` client
+     * @param cacheOptions Cache config to make the requests
+     */
+    constructor(cacheOptions?: CacheOptions) {
+        this.#cacheConfig = cacheOptions
+    }
+
     /**
      * Gets anime data by its MyAnimeList ID
      * @param id MyAnimeList ID of the anime
@@ -35,7 +45,7 @@ export class Anime {
     public getAnimeById = async (id: string | number): Promise<IAnime> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IAnime }>(getURL('anime', `${id}`))).data
+        return (await fetch<{ data: IAnime }>(getURL('anime', `${id}`), this.#cacheConfig)).data
     }
 
     /**
@@ -46,7 +56,7 @@ export class Anime {
     public getAnimeFullById = async (id: string | number): Promise<IAnimeFull> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IAnimeFull }>(getURL('anime', `${id}`, 'full'))).data
+        return (await fetch<{ data: IAnimeFull }>(getURL('anime', `${id}`, 'full'), this.#cacheConfig)).data
     }
 
     /**
@@ -57,7 +67,8 @@ export class Anime {
     public getAnimeCharacters = async (id: string | number): Promise<IAnimeCharacter[]> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IAnimeCharacter[] }>(getURL('anime', `${id}`, 'characters'))).data
+        return (await fetch<{ data: IAnimeCharacter[] }>(getURL('anime', `${id}`, 'characters'), this.#cacheConfig))
+            .data
     }
 
     /**
@@ -68,7 +79,7 @@ export class Anime {
     public getAnimeStaff = async (id: string | number): Promise<IAnimeStaff[]> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IAnimeStaff[] }>(getURL('anime', `${id}`, 'staff'))).data
+        return (await fetch<{ data: IAnimeStaff[] }>(getURL('anime', `${id}`, 'staff'), this.#cacheConfig)).data
     }
 
     /**
@@ -84,7 +95,8 @@ export class Anime {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
         return await fetch<{ data: IEpisodeFromList[]; pagination: IPagination }>(
-            getURL('anime', `${id}`, 'episodes').concat(getQueryString<keyof ICommonConfig>(config || {}))
+            getURL('anime', `${id}`, 'episodes').concat(getQueryString<keyof ICommonConfig>(config || {})),
+            this.#cacheConfig
         )
     }
 
@@ -102,7 +114,12 @@ export class Anime {
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
         if (typeof episode_id !== 'string' && typeof episode_id !== 'number')
             throw new TypeError(getTypeErrorMessage('episode_id', 'string or number', typeof id))
-        return (await fetch<{ data: IEpisodeResponse }>(getURL('anime', `${id}`, 'episodes', `${episode_id}`))).data
+        return (
+            await fetch<{ data: IEpisodeResponse }>(
+                getURL('anime', `${id}`, 'episodes', `${episode_id}`),
+                this.#cacheConfig
+            )
+        ).data
     }
 
     /**
@@ -118,7 +135,8 @@ export class Anime {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
         return await fetch<{ data: INewsResponse[]; pagination: IPagination }>(
-            getURL('anime', `${id}`, 'news').concat(getQueryString<keyof ICommonConfig>(config || {}))
+            getURL('anime', `${id}`, 'news').concat(getQueryString<keyof ICommonConfig>(config || {})),
+            this.#cacheConfig
         )
     }
 
@@ -133,7 +151,8 @@ export class Anime {
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
         return (
             await fetch<{ data: IAnimeForum[] }>(
-                getURL('anime', `${id}`, 'forum').concat(getQueryString<keyof IAnimeForumConfig>(config || {}))
+                getURL('anime', `${id}`, 'forum').concat(getQueryString<keyof IAnimeForumConfig>(config || {})),
+                this.#cacheConfig
             )
         ).data
     }
@@ -146,7 +165,7 @@ export class Anime {
     public getAnimeVideos = async (id: string | number): Promise<IAnimeVideo> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IAnimeVideo }>(getURL('anime', `${id}`, 'videos'))).data
+        return (await fetch<{ data: IAnimeVideo }>(getURL('anime', `${id}`, 'videos'), this.#cacheConfig)).data
     }
 
     /**
@@ -162,7 +181,8 @@ export class Anime {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
         return await fetch<{ data: IAnimeVideosEpisode[]; pagination: IPagination }>(
-            getURL('anime', `${id}`, 'videos', 'episodes').concat(getQueryString<keyof ICommonConfig>(config || {}))
+            getURL('anime', `${id}`, 'videos', 'episodes').concat(getQueryString<keyof ICommonConfig>(config || {})),
+            this.#cacheConfig
         )
     }
 
@@ -174,7 +194,7 @@ export class Anime {
     public getAnimePictures = async (id: string | number): Promise<IPicture[]> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IPicture[] }>(getURL('anime', `${id}`, 'pictures'))).data
+        return (await fetch<{ data: IPicture[] }>(getURL('anime', `${id}`, 'pictures'), this.#cacheConfig)).data
     }
 
     /**
@@ -185,7 +205,7 @@ export class Anime {
     public getAnimeStatistics = async (id: string | number): Promise<IAnimeStatistics> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IAnimeStatistics }>(getURL('anime', `${id}`, 'statistics'))).data
+        return (await fetch<{ data: IAnimeStatistics }>(getURL('anime', `${id}`, 'statistics'), this.#cacheConfig)).data
     }
 
     /**
@@ -196,7 +216,7 @@ export class Anime {
     public getAnimeMoreInfo = async (id: string | number): Promise<IMoreInfo> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IMoreInfo }>(getURL('anime', `${id}`, 'moreinfo'))).data
+        return (await fetch<{ data: IMoreInfo }>(getURL('anime', `${id}`, 'moreinfo'), this.#cacheConfig)).data
     }
 
     /**
@@ -207,7 +227,12 @@ export class Anime {
     public getAnimeRecommendations = async (id: string | number): Promise<IAnimeRecommendation[]> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IAnimeRecommendation[] }>(getURL('anime', `${id}`, 'recommendations'))).data
+        return (
+            await fetch<{ data: IAnimeRecommendation[] }>(
+                getURL('anime', `${id}`, 'recommendations'),
+                this.#cacheConfig
+            )
+        ).data
     }
 
     /**
@@ -223,7 +248,8 @@ export class Anime {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
         return await fetch<{ data: IAnimeUserUpdates[]; pagination: IPagination }>(
-            getURL('anime', `${id}`, 'userupdates').concat(getQueryString<keyof ICommonConfig>(config || {}))
+            getURL('anime', `${id}`, 'userupdates').concat(getQueryString<keyof ICommonConfig>(config || {})),
+            this.#cacheConfig
         )
     }
 
@@ -240,7 +266,8 @@ export class Anime {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
         return await fetch<{ pagination: IPagination; data: IAnimeReview[] }>(
-            getURL('anime', `${id}`, 'reviews').concat(getQueryString<keyof IReviewConfig>(config || {}))
+            getURL('anime', `${id}`, 'reviews').concat(getQueryString<keyof IReviewConfig>(config || {})),
+            this.#cacheConfig
         )
     }
 
@@ -252,7 +279,7 @@ export class Anime {
     public getAnimeRelations = async (id: string | number): Promise<IAnimeRelation[]> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IAnimeRelation[] }>(getURL('anime', `${id}`, 'relations'))).data
+        return (await fetch<{ data: IAnimeRelation[] }>(getURL('anime', `${id}`, 'relations'), this.#cacheConfig)).data
     }
 
     /**
@@ -263,7 +290,7 @@ export class Anime {
     public getAnimeThemes = async (id: string | number): Promise<IAnime['themes']> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IAnime['themes'] }>(getURL('anime', `${id}`, 'themes'))).data
+        return (await fetch<{ data: IAnime['themes'] }>(getURL('anime', `${id}`, 'themes'), this.#cacheConfig)).data
     }
 
     /**
@@ -274,7 +301,8 @@ export class Anime {
     public getAnimeExternal = async (id: string | number): Promise<IAnimeFull['external']> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IAnimeFull['external'] }>(getURL('anime', `${id}`, 'external'))).data
+        return (await fetch<{ data: IAnimeFull['external'] }>(getURL('anime', `${id}`, 'external'), this.#cacheConfig))
+            .data
     }
 
     /**
@@ -285,7 +313,9 @@ export class Anime {
     public getAnimeStreaming = async (id: string | number): Promise<IAnimeFull['streaming']> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IAnimeFull['streaming'] }>(getURL('anime', `${id}`, 'streaming'))).data
+        return (
+            await fetch<{ data: IAnimeFull['streaming'] }>(getURL('anime', `${id}`, 'streaming'), this.#cacheConfig)
+        ).data
     }
 
     /**
@@ -297,6 +327,7 @@ export class Anime {
         config?: IAnimeSearchConfig
     ): Promise<{ data: IAnime[]; pagination: IExtendedPagination; items: IItems }> =>
         await fetch<{ data: IAnime[]; pagination: IExtendedPagination; items: IItems }>(
-            getURL('anime').concat(getQueryString(config || {}))
+            getURL('anime').concat(getQueryString(config || {})),
+            this.#cacheConfig
         )
 }
