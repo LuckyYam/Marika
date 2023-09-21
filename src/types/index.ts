@@ -1,4 +1,4 @@
-import { Sorting } from '../constants'
+import { Sorting, Forums } from '../constants'
 
 export interface IJikanError {
     status: 400 | 404 | 405 | 429 | 500
@@ -161,6 +161,13 @@ export interface IResponse {
     demographics: IExtendedResource[]
 }
 
+export interface IRelation {
+    /** Relation of the source */
+    relation: string
+    /** Entries of the relation */
+    entry: IExtendedResource[]
+}
+
 export interface ITimeResponse {
     /** Starting  date of the source*/
     from: string | null
@@ -187,22 +194,59 @@ export interface IDate {
 }
 
 export interface ICharacterFromSource {
-    /** MAL ID of the  character */
-    mal_id: number
-    /** MAL URL to the character */
-    url: string
-    /** Images of the character in the formats jpg & webp */
-    images: {
-        /** Images of the character in the format jpg */
-        jpg: {
-            /** Image URL of the character in normal size of format jpg */
-            image_url: string | null
+    /** Data of the character */
+    character: {
+        /** MAL ID of the  character */
+        mal_id: number
+        /** MAL URL to the character */
+        url: string
+        /** Images of the character in the formats jpg & webp */
+        images: {
+            /** Images of the character in the format jpg */
+            jpg: {
+                /** Image URL of the character in normal size of format jpg */
+                image_url: string | null
+            }
+            /** Images of the character in the format webp */
+            webp: ISimpleImageResponse
         }
-        /** Images of the character in the format webp */
-        webp: ISimpleImageResponse
+        /** Name of the character */
+        name: string
     }
-    /** Name of the character */
-    name: string
+    /** Role of the character in the source */
+    role: string
+}
+
+export interface IForumConfig {
+    filter?: Forums
+}
+
+export interface IForum {
+    /** MAL ID of the forum */
+    mal_id: number
+    /** URL to the forum */
+    url: string
+    /** Title of the forum */
+    title: string
+    /** The date which the forum was posted */
+    date: string
+    /** Username of the forum creator */
+    author_username: string
+    /** Forum creator user's URL */
+    author_url: string
+    /** Number of comments for the forum */
+    comments: number
+    /** Last comment of the forum */
+    last_comment: {
+        /** URL to the latest comment of the forum */
+        url: string
+        /** Name of the user */
+        author_username: string
+        /** URL of the user */
+        author_url: string
+        /** The date which the user commented */
+        date: string
+    }
 }
 
 export interface IReviewConfig extends ICommonConfig {
@@ -212,6 +256,35 @@ export interface IReviewConfig extends ICommonConfig {
     spoiler?: boolean
 }
 
+export interface IUserUpdate {
+    /** Data of the user */
+    user: IUser
+    /** Score given by the user */
+    score: number | null
+    /** Status for the user in the anime */
+    status: string | null
+    /** Date which the update was done */
+    date: string
+}
+
+export interface IRecommendation {
+    /** Data of the recommended source */
+    entry: {
+        /** MAL ID of the source */
+        mal_id: number
+        /** URL of the source */
+        url: string
+        /** Images of the source in the formats webp & jpg */
+        images: IPicture
+        /** Title of the source */
+        title: string
+    }
+    /** URL of the recommendation */
+    url: string
+    /** Votes of the recommendated entry */
+    votes: number
+}
+
 export interface IReview {
     /** MAL ID of the review */
     mal_id: number
@@ -219,7 +292,7 @@ export interface IReview {
     url: string
     /** Type of the review */
     type: string
-    /** Reactions for the review */
+    /** Reactions of the review */
     reactions: {
         /** Total number of users that reacted the review  */
         overall: number
@@ -322,3 +395,4 @@ export * from './characters'
 export * from './clubs'
 export * from './genres'
 export * from './magazines'
+export * from './manga'

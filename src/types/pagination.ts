@@ -8,6 +8,8 @@ export interface IPagination {
 export interface IExtendedPagination extends IPagination {
     /** Current page of the data */
     current_page: number
+    /** Data of the pagination */
+    items: IItems
 }
 
 export interface IItems {

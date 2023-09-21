@@ -1,2 +1,2 @@
 ## Zzzz...
-Sorry, in development for now. You can go to the [main](https://github.com/LuckyYam/Marika/tree/main) branch for now.
+Sorry, not completed for now. You can go to the [main](https://github.com/LuckyYam/Marika/tree/main) branch for now.

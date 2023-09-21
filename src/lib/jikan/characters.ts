@@ -4,8 +4,7 @@ import {
     ICharacterFull,
     ICharacterPicture,
     ICharacterSearchConfig,
-    IExtendedPagination,
-    IItems
+    IExtendedPagination
 } from '../../types'
 import { fetch, getURL, getQueryString, getTypeErrorMessage } from '../../utils'
 
@@ -100,8 +99,8 @@ export class Characters {
      */
     public getCharactersSearch = async (
         config?: ICharacterSearchConfig
-    ): Promise<{ data: ICharacter[]; pagination: IExtendedPagination; items: IItems }> =>
-        await fetch<{ data: ICharacter[]; pagination: IExtendedPagination; items: IItems }>(
+    ): Promise<{ data: ICharacter[]; pagination: IExtendedPagination }> =>
+        await fetch<{ data: ICharacter[]; pagination: IExtendedPagination }>(
             getURL('characters').concat(getQueryString<keyof ICharacterSearchConfig>(config || {})),
             this.#cacheConfig
         )

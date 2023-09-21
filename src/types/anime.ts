@@ -6,16 +6,16 @@ import {
     IResponse,
     ICharacterFromSource,
     IScore,
-    IPicture,
-    IUser,
     IReview,
-    ISearchConfig
+    ISearchConfig,
+    IRelation,
+    IUserUpdate
 } from '.'
-import { AnimeForums, AnimeStatus, AnimeTypes, Ratings } from '../'
+import { AnimeStatus, AnimeTypes, Ratings } from '../'
 
 export interface IAnimeFull extends IAnime {
     /** Relations of the anime */
-    relations: IAnimeRelation[]
+    relations: IRelation[]
     /** Theme for the anime */
     theme: {
         /** Openings of the anime */
@@ -32,13 +32,6 @@ export interface IAnimeFull extends IAnime {
 export interface IAnimeReview extends IReview {
     /** Number of episodes watched by the reviewer */
     episodes_watched: number | null
-}
-
-export interface IAnimeRelation {
-    /** Relation of the source */
-    relation: string
-    /** Entries of the relation */
-    entry: IExtendedResource[]
 }
 
 export interface IAnime extends IResponse {
@@ -127,48 +120,18 @@ export interface IAnimeStaff {
     positions: string[]
 }
 
-export interface IAnimeCharacter {
-    /** Character data of the anime */
-    character: ICharacterFromSource
-    /** Role of the character in the anime */
-    role: string
+export interface IAnimeCharacter extends ICharacterFromSource {
     /** Favorites count of the character */
     favorites: number
     /** Voice actors of the character in the anime */
     voice_actors: IVoiceActor[]
 }
 
-export interface IAnimeUserUpdates {
-    /** Data of the user */
-    user: IUser
-    /** Score given by the user */
-    score: number | null
-    /** Status for the user in the anime */
-    status: string | null
+export interface IAnimeUserUpdate extends IUserUpdate {
     /** Number of episodes seen */
     episodes_seen: number | null
-    /** Total number of episodes */
+    /** Total number of episodes to watch */
     episodes_total: number | null
-    /** Date which the update was done */
-    date: string
-}
-
-export interface IAnimeRecommendation {
-    /** Data of the recommended anime */
-    entry: {
-        /** MAL ID of the anime */
-        mal_id: number
-        /** URL of the anime */
-        url: string
-        /** Images of the anime in the formats webp & jpg */
-        images: IPicture
-        /** Title of the anime */
-        title: string
-    }
-    /** URL of the recommendation anime */
-    url: string
-    /** Votes of the recommendated entry */
-    votes: number
 }
 
 export interface IYouTube {
@@ -191,9 +154,9 @@ export interface IAnimeStatistics {
     on_hold: number
     /** Number of users who have dropped the anime */
     dropped: number
-    /** Number of users who are planning to watch the anime */
+    /** Number of users who have plans to watch the anime */
     plan_to_watch: number
-    /** Total number of users who have  set their status on the anime */
+    /** Total number of users who have set their status on the anime */
     total: number
     /** Scores of the anime given by the users */
     scores: IScore[]
@@ -230,10 +193,6 @@ export interface IAnimeVideo {
             author: string
         }
     }[]
-}
-
-export interface IAnimeForumConfig {
-    filter?: AnimeForums
 }
 
 export interface IVoiceActor {
@@ -274,34 +233,6 @@ export interface IAnimeVideosEpisode {
             /** Image URL of the episode in the format jpg */
             image_url: string | null
         }
-    }
-}
-
-export interface IAnimeForum {
-    /** MAL ID of the forum */
-    mal_id: number
-    /** URL to the forum */
-    url: string
-    /** Title of the forum */
-    title: string
-    /** The date which the forum was posted */
-    date: string
-    /** Username of the forum creator */
-    author_username: string
-    /** Forum creator user's URL */
-    author_url: string
-    /** Number of comments for the forum */
-    comments: number
-    /** Last comment of the forum */
-    last_comment: {
-        /** URL to the latest comment of the forum */
-        url: string
-        /** Name of the user */
-        author_username: string
-        /** URL of the user */
-        author_url: string
-        /** The date which the user commented */
-        date: string
     }
 }
 

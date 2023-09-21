@@ -15,7 +15,7 @@
     "build": "yarn rimraf dist/ && yarn tsc && yarn docs",
     "lint": "eslint . --ignore-path .gitignore --ext .ts",
     "lint:fix": "eslint . --ignore-path .gitignore --ext .ts --fix",
-    "format": "prettier --write --config .prettierrc.json \"src/**/*.ts\"",
+    "format": "yarn prettier --write --config .prettierrc.json \"src/**/*.ts\"",
     "prepack": "yarn build",
     "docs": "yarn typedoc"
   },
@@ -48,6 +48,7 @@
     "@typescript-eslint/parser": "^6.7.2",
     "eslint": "^8.49.0",
     "mocha": "^10.2.0",
+    "prettier": "^3.0.3",
     "ts-node": "^10.9.1",
     "typedoc": "^0.25.1",
     "typescript": "^5.2.2"

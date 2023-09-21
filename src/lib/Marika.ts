@@ -1,24 +1,30 @@
 import { CacheOptions } from 'axios-cache-interceptor'
-import { Anime, Characters, Clubs, Genres, Magazines } from './jikan'
+import { Anime, Characters, Clubs, Genres, Magazines, Manga } from './jikan'
 
 export class Marika {
-    #cacheConfig?: CacheOptions
     /**
      * Constructs an instance of the `main (jikan)` client
      * @param cacheOptions Cache config to make the requests. See https://axios-cache-interceptor.js.org/config
      */
     constructor(cacheOptions?: CacheOptions) {
-        this.#cacheConfig = cacheOptions
+        this.anime = new Anime(cacheOptions)
+        this.characters = new Characters(cacheOptions)
+        this.clubs = new Clubs(cacheOptions)
+        this.genres = new Genres(cacheOptions)
+        this.magazines = new Magazines(cacheOptions)
+        this.manga = new Manga(cacheOptions)
     }
 
     /** Client of `anime` */
-    public anime = new Anime(this.#cacheConfig)
+    public anime: Anime
     /** Client of `characters` */
-    public characters = new Characters(this.#cacheConfig)
+    public characters: Characters
     /** Client of `clubs` */
-    public clubs = new Clubs(this.#cacheConfig)
+    public clubs: Clubs
     /** Client of `genres` */
-    public genres = new Genres(this.#cacheConfig)
+    public genres: Genres
     /** Client of `magazines` */
-    public magazines = new Magazines(this.#cacheConfig)
+    public magazines: Magazines
+    /** Client of `manga` */
+    public manga: Manga
 }
