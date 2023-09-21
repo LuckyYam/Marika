@@ -25,7 +25,7 @@ export class Manga {
     #cacheConfig?: CacheOptions
     /**
      * Constructs an instance of the `manga` client
-     * @param cacheOptions Cache options to make the requests. See https://axios-cache-interceptor.js.org/config
+     * @param cacheOptions Cache options for the client to make requests. See https://axios-cache-interceptor.js.org/config
      */
     constructor(cacheOptions?: CacheOptions) {
         this.#cacheConfig = cacheOptions
@@ -92,7 +92,12 @@ export class Manga {
     public getMangaTopics = async (id: string | number, config?: IForumConfig): Promise<IForum[]> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IForum[] }>(getURL('manga', `${id}`, 'forum').concat(getQueryString<keyof IForumConfig>(config || {})), this.#cacheConfig)).data
+        return (
+            await fetch<{ data: IForum[] }>(
+                getURL('manga', `${id}`, 'forum').concat(getQueryString<keyof IForumConfig>(config || {})),
+                this.#cacheConfig
+            )
+        ).data
     }
 
     /**

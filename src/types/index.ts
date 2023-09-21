@@ -217,6 +217,14 @@ export interface ICharacterFromSource {
     role: string
 }
 
+export interface ICommonPicture {
+    /** Image of the target in the format jpg */
+    jpg: {
+        /** Image URL of the target in the format jpg */
+        image_url: string
+    }
+}
+
 export interface IForumConfig {
     filter?: Forums
 }
@@ -396,3 +404,5 @@ export * from './clubs'
 export * from './genres'
 export * from './magazines'
 export * from './manga'
+export * from './people'
+export * from './schedules'

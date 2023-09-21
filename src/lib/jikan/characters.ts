@@ -1,18 +1,12 @@
 import { CacheOptions } from 'axios-cache-interceptor'
-import {
-    ICharacter,
-    ICharacterFull,
-    ICharacterPicture,
-    ICharacterSearchConfig,
-    IExtendedPagination
-} from '../../types'
+import { ICharacter, ICharacterFull, ICommonPicture, ICharacterSearchConfig, IExtendedPagination } from '../../types'
 import { fetch, getURL, getQueryString, getTypeErrorMessage } from '../../utils'
 
 export class Characters {
     #cacheConfig?: CacheOptions
     /**
      * Constructs an instance of the `characters` client
-     * @param cacheOptions Cache options to make the requests. See https://axios-cache-interceptor.js.org/config
+     * @param cacheOptions Cache options for the client to make requests. See https://axios-cache-interceptor.js.org/config
      */
     constructor(cacheOptions?: CacheOptions) {
         this.#cacheConfig = cacheOptions
@@ -84,12 +78,11 @@ export class Characters {
      * @param id MyAnimeList ID of the character
      * @returns Pictures of the character
      */
-    public getCharacterPictures = async (id: string | number): Promise<ICharacterPicture[]> => {
+    public getCharacterPictures = async (id: string | number): Promise<ICommonPicture[]> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (
-            await fetch<{ data: ICharacterPicture[] }>(getURL('characters', `${id}`, 'pictures'), this.#cacheConfig)
-        ).data
+        return (await fetch<{ data: ICommonPicture[] }>(getURL('characters', `${id}`, 'pictures'), this.#cacheConfig))
+            .data
     }
 
     /**

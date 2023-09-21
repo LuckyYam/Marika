@@ -1,5 +1,5 @@
 import { CacheOptions } from 'axios-cache-interceptor'
-import { Anime, Characters, Clubs, Genres, Magazines, Manga } from './jikan'
+import { Anime, Characters, Clubs, Genres, Magazines, Manga, People, Reviews, Schedules } from './jikan'
 
 export class Marika {
     /**
@@ -13,6 +13,9 @@ export class Marika {
         this.genres = new Genres(cacheOptions)
         this.magazines = new Magazines(cacheOptions)
         this.manga = new Manga(cacheOptions)
+        this.people = new People(cacheOptions)
+        this.reviews = new Reviews(cacheOptions)
+        this.schedules = new Schedules(cacheOptions)
     }
 
     /** Client of `anime` */
@@ -27,4 +30,10 @@ export class Marika {
     public magazines: Magazines
     /** Client of `manga` */
     public manga: Manga
+    /** Client of `people` */
+    public people: People
+    /** Client of `reviews` */
+    public reviews: Reviews
+    /** Client of `schedules` */
+    public schedules: Schedules
 }

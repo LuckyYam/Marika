@@ -19,8 +19,8 @@ export interface ICharacter {
     images: {
         /** Image of the character in the format jpg */
         jpg: {
-            /** Image URL of the character in the format jpg */
-            image_url: string | null
+            /** Image URL of the character in the jpg format */
+            image_url: string
         }
         /** Images of the character in the format webp */
         webp: ISimpleImageResponse
@@ -35,14 +35,6 @@ export interface ICharacter {
     favorites: number
     /** About (description) of the character */
     about: string | null
-}
-
-export interface ICharacterPicture {
-    /** Image of the character in the format jpg */
-    jpg: {
-        /** Image URL of the character in the format jpg */
-        image_url: string
-    }
 }
 
 export interface ICharacterSearchConfig extends ICommonConfig {
