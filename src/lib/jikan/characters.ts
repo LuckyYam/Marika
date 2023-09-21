@@ -13,11 +13,12 @@ export class Characters {
     #cacheConfig?: CacheOptions
     /**
      * Constructs an instance of the `characters` client
-     * @param cacheOptions Cache config to make the requests
+     * @param cacheOptions Cache options to make the requests. See https://axios-cache-interceptor.js.org/config
      */
     constructor(cacheOptions?: CacheOptions) {
         this.#cacheConfig = cacheOptions
     }
+
     /**
      * Gets the data of a character from its MyAnimeList ID
      * @param id MyAnimeList ID of the character
@@ -94,14 +95,14 @@ export class Characters {
 
     /**
      * Searches for a character in MyAnimeList
-     * @param config Config to make the request
+     * @param config Config to make the search
      * @returns The results of the search
      */
-    public getCharacterSearch = async (
+    public getCharactersSearch = async (
         config?: ICharacterSearchConfig
     ): Promise<{ data: ICharacter[]; pagination: IExtendedPagination; items: IItems }> =>
         await fetch<{ data: ICharacter[]; pagination: IExtendedPagination; items: IItems }>(
-            getURL('characters').concat(getQueryString(config || {})),
+            getURL('characters').concat(getQueryString<keyof ICharacterSearchConfig>(config || {})),
             this.#cacheConfig
         )
 }

@@ -1,2 +1,5 @@
 export * from './anime'
 export * from './characters'
+export * from './clubs'
+export * from './genres'
+export * from './magazines'

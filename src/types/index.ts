@@ -44,7 +44,7 @@ export interface ISimpleImageResponse {
     small_image_url: string | null
 }
 
-export interface IExtendedResource {
+export interface IExtendedResource extends IResource {
     /** MAL ID of the resource */
     mal_id: number
     /** Type of the resource */
@@ -280,6 +280,13 @@ export interface IMoreInfo {
     moreinfo: string | null
 }
 
+export interface ICommonResource extends IResource {
+    /** MyAnimeList ID of the topic */
+    mal_id: number
+    /** Total count of the sources for the topic */
+    count: number
+}
+
 export interface INewsResponse {
     /** MAL ID of the news article */
     mal_id: number
@@ -312,3 +319,6 @@ export interface INewsResponse {
 export * from './pagination'
 export * from './anime'
 export * from './characters'
+export * from './clubs'
+export * from './genres'
+export * from './magazines'

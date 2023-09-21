@@ -31,7 +31,7 @@ export class Anime {
     #cacheConfig?: CacheOptions
     /**
      * Constructs an instance of the `anime` client
-     * @param cacheOptions Cache config to make the requests
+     * @param cacheOptions Cache options to make the requests. See https://axios-cache-interceptor.js.org/config
      */
     constructor(cacheOptions?: CacheOptions) {
         this.#cacheConfig = cacheOptions
@@ -319,15 +319,15 @@ export class Anime {
     }
 
     /**
-     * Searches for an anime
-     * @param config Config to make the request
+     * Searches for anime in MyAnimeList
+     * @param config Config to make the search
      * @returns Results of the search
      */
     public getAnimeSearch = async (
         config?: IAnimeSearchConfig
     ): Promise<{ data: IAnime[]; pagination: IExtendedPagination; items: IItems }> =>
         await fetch<{ data: IAnime[]; pagination: IExtendedPagination; items: IItems }>(
-            getURL('anime').concat(getQueryString(config || {})),
+            getURL('anime').concat(getQueryString<keyof IAnimeSearchConfig>(config || {})),
             this.#cacheConfig
         )
 }

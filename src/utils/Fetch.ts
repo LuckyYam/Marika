@@ -3,7 +3,7 @@ import { setupCache, CacheOptions } from 'axios-cache-interceptor'
 import { MarikaError } from './Error'
 import { IJikanError } from '../types'
 
-export const fetch = async <T>(url: string, cacheOprions?: CacheOptions): Promise<T> => {
+export const fetch = async <T>(url: string, cacheOptions?: CacheOptions): Promise<T> => {
     const throwError = (error: Error & { response: AxiosResponse<IJikanError> }) => {
         throw new MarikaError(
             error.response.status as 400,
@@ -12,7 +12,7 @@ export const fetch = async <T>(url: string, cacheOprions?: CacheOptions): Promis
             error.response.data.message || error.response.data.messages
         )
     }
-    const axios = setupCache(Axios, cacheOprions)
+    const axios = setupCache(Axios, cacheOptions)
     return await axios
         .get<T>(url)
         .then((res) => {
