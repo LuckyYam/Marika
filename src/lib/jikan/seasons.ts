@@ -6,8 +6,8 @@ import { AnimeSeasons } from '../../constants'
 export class Seasons {
     #cacheConfig?: CacheOptions
     /**
-     * Creates an instance of the `seasons` client
-     * @param cacheOptions Cache options for the client to make requests. See https://axios-cache-interceptor.js.org/config
+     * Constructs an instance of the `seasons` client
+     * @param cacheOptions Cache options for the client to make requests. See {@link https://axios-cache-interceptor.js.org/config}
      */
     constructor(cacheOptions?: CacheOptions) {
         this.#cacheConfig = cacheOptions

@@ -259,7 +259,7 @@ export interface IUserUpdate {
     user: IUser
     /** Score given by the user */
     score: number | null
-    /** Status for the user in the anime */
+    /** Status for the user in the source*/
     status: string | null
     /** Date which the update was done */
     date: string
@@ -289,7 +289,7 @@ export interface IReview {
     /** URL of the review */
     url: string
     /** Type of the review */
-    type: string
+    type: 'anime' | 'manga'
     /** Reactions of the review */
     reactions: {
         /** Total number of users that reacted the review  */
@@ -393,3 +393,5 @@ export * from './schedules'
 export * from './producers'
 export * from './recommendations'
 export * from './seasons'
+export * from './users'
+export * from './watch'

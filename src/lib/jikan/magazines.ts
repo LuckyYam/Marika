@@ -6,7 +6,7 @@ export class Magazines {
     #cacheConfig?: CacheOptions
     /**
      * Constructs an instance of the `magazines` client
-     * @param cacheOptions Cache options for the client to make requests. See https://axios-cache-interceptor.js.org/config
+     * @param cacheOptions Cache options for the client to make requests. See {@link https://axios-cache-interceptor.js.org/config}
      */
     constructor(cacheOptions?: CacheOptions) {
         this.#cacheConfig = cacheOptions

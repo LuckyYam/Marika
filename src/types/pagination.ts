@@ -1,5 +1,5 @@
 export interface IPagination {
-    /** Last page of the data */
+    /** Last visible page of the data */
     last_visible_page: number
     /** This value will be true if a next page exists for the data & vice versa  */
     has_next_page: boolean

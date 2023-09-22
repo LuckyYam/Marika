@@ -11,13 +11,15 @@ import {
     Recommendations,
     Reviews,
     Schedules,
-    Seasons
+    Seasons,
+    Users,
+    Watch
 } from './jikan'
 
 export class Marika {
     /**
      * Constructs an instance of the `main (jikan)` client
-     * @param cacheOptions Cache config to make the requests. See https://axios-cache-interceptor.js.org/config
+     * @param cacheOptions Cache config to make the requests. See {@link https://axios-cache-interceptor.js.org/config}
      */
     constructor(cacheOptions?: CacheOptions) {
         this.anime = new Anime(cacheOptions)
@@ -32,6 +34,8 @@ export class Marika {
         this.producers = new Producers(cacheOptions)
         this.recommendations = new Recommendations(cacheOptions)
         this.seasons = new Seasons(cacheOptions)
+        this.users = new Users(cacheOptions)
+        this.watch = new Watch(cacheOptions)
     }
 
     /** Client of `anime` */
@@ -58,4 +62,8 @@ export class Marika {
     public recommendations: Recommendations
     /** Client of `seasons` */
     public seasons: Seasons
+    /** Client of `users` */
+    public users: Users
+    /** Client of `watch` */
+    public watch: Watch
 }
