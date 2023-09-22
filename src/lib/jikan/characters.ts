@@ -5,8 +5,8 @@ import { fetch, getURL, getQueryString, getTypeErrorMessage } from '../../utils'
 export class Characters {
     #cacheConfig?: CacheOptions
     /**
-     * Constructs an instance of the `characters` client
-     * @param cacheOptions Cache options for the client to make requests. See {@link https://axios-cache-interceptor.js.org/config}
+     * Constructs an instance of the [characters](https://docs.api.jikan.moe/#tag/characters) client
+     * @param cacheOptions [Cache options](https://axios-cache-interceptor.js.org/config) for the client to make requests
      */
     constructor(cacheOptions?: CacheOptions) {
         this.#cacheConfig = cacheOptions

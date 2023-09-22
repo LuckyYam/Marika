@@ -5,8 +5,8 @@ import { IExtendedPagination, IProducer, IProducerFull, IProducerSearchConfig } 
 export class Producers {
     #cacheConfig?: CacheOptions
     /**
-     * Constructs an instance of the `producers` client
-     * @param cacheOptions Cache options for the client to make requests. See {@link https://axios-cache-interceptor.js.org/config}
+     * Constructs an instance of the [producers](https://docs.api.jikan.moe/#tag/producers) client
+     * @param cacheOptions [Cache options](https://axios-cache-interceptor.js.org/config) for the client to make requests
      */
     constructor(cacheOptions?: CacheOptions) {
         this.#cacheConfig = cacheOptions

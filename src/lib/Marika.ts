@@ -8,6 +8,7 @@ import {
     Manga,
     People,
     Producers,
+    Random,
     Recommendations,
     Reviews,
     Schedules,
@@ -18,8 +19,8 @@ import {
 
 export class Marika {
     /**
-     * Constructs an instance of the `main (jikan)` client
-     * @param cacheOptions Cache config to make the requests. See {@link https://axios-cache-interceptor.js.org/config}
+     * Constructs an instance of the [main](https://docs.api.jikan.moe/) client
+     * @param cacheOptions [Cache options](https://axios-cache-interceptor.js.org/config) for the client to make requests
      */
     constructor(cacheOptions?: CacheOptions) {
         this.anime = new Anime(cacheOptions)
@@ -36,34 +37,37 @@ export class Marika {
         this.seasons = new Seasons(cacheOptions)
         this.users = new Users(cacheOptions)
         this.watch = new Watch(cacheOptions)
+        this.random = new Random(cacheOptions)
     }
 
-    /** Client of `anime` */
+    /** Client of [anime](https://docs.api.jikan.moe/#tag/anime) */
     public anime: Anime
-    /** Client of `characters` */
+    /** Client of [characters](https://docs.api.jikan.moe/#tag/characters) */
     public characters: Characters
-    /** Client of `clubs` */
+    /** Client of [clubs](https://docs.api.jikan.moe/#tag/clubs) */
     public clubs: Clubs
-    /** Client of `genres` */
+    /** Client of [genres](https://docs.api.jikan.moe/#tag/genres) */
     public genres: Genres
-    /** Client of `magazines` */
+    /** Client of [magazines](https://docs.api.jikan.moe/#tag/magazines) */
     public magazines: Magazines
-    /** Client of `manga` */
+    /** Client of [manga](https://docs.api.jikan.moe/#tag/manga) */
     public manga: Manga
-    /** Client of `people` */
+    /** Client of [people](https://docs.api.jikan.moe/#tag/people) */
     public people: People
-    /** Client of `reviews` */
+    /** Client of [reviews](https://docs.api.jikan.moe/#tag/reviews) */
     public reviews: Reviews
-    /** Client of `schedules` */
+    /** Client of [schedules](https://docs.api.jikan.moe/#tag/schedules) */
     public schedules: Schedules
-    /** Client of `producers` */
+    /** Client of [producers](https://docs.api.jikan.moe/#tag/producers) */
     public producers: Producers
-    /** Client of `recommendations` */
+    /** Client of [recommendations](https://docs.api.jikan.moe/#tag/recommendations) */
     public recommendations: Recommendations
-    /** Client of `seasons` */
+    /** Client of [seasons](https://docs.api.jikan.moe/#tag/seasons) */
     public seasons: Seasons
-    /** Client of `users` */
+    /** Client of [users](https://docs.api.jikan.moe/#tag/users) */
     public users: Users
-    /** Client of `watch` */
+    /** Client of [watch](https://docs.api.jikan.moe/#tag/watch) */
     public watch: Watch
+    /** Client of [random](https://docs.api.jikan.moe/#tag/random) */
+    public random: Random
 }

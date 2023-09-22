@@ -5,8 +5,8 @@ import { ICommonResource, IMagazineConfig, IPagination } from '../../types'
 export class Magazines {
     #cacheConfig?: CacheOptions
     /**
-     * Constructs an instance of the `magazines` client
-     * @param cacheOptions Cache options for the client to make requests. See {@link https://axios-cache-interceptor.js.org/config}
+     * Constructs an instance of the [magazines](https://docs.api.jikan.moe/#tag/magazines) client
+     * @param cacheOptions [Cache options](https://axios-cache-interceptor.js.org/config) for the client to make requests
      */
     constructor(cacheOptions?: CacheOptions) {
         this.#cacheConfig = cacheOptions

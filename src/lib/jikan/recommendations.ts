@@ -5,8 +5,8 @@ import { ICommonConfig, IPagination, IRandomRecommendation } from '../../types'
 export class Recommendations {
     #cacheConfig?: CacheOptions
     /**
-     * Constructs an instance of the `recommendations` client
-     * @param cacheOptions Cache options for the client to make requests. See {@link https://axios-cache-interceptor.js.org/config}
+     * Constructs an instance of the [recommendations](https://docs.api.jikan.moe/#tag/recommendations) client
+     * @param cacheOptions [Cache options](https://axios-cache-interceptor.js.org/config) for the client to make requests
      */
     constructor(cacheOptions?: CacheOptions) {
         this.#cacheConfig = cacheOptions

@@ -5,8 +5,8 @@ import { fetch, getQueryString, getURL } from '../../utils'
 export class Reviews {
     #cacheConfig?: CacheOptions
     /**
-     * Constructs an instance of the `reviews` client
-     * @param cacheOptions Cache options for the client to make requests. See {@link https://axios-cache-interceptor.js.org/config}
+     * Constructs an instance of the [reviews](https://docs.api.jikan.moe/#tag/reviews) client
+     * @param cacheOptions [Cache options](https://axios-cache-interceptor.js.org/config) for the client to make requests
      */
     constructor(cacheOptions?: CacheOptions) {
         this.#cacheConfig = cacheOptions

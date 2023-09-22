@@ -13,8 +13,8 @@ import {
 export class Clubs {
     #cacheConfig?: CacheOptions
     /**
-     * Constructs an instance of the `clubs` client
-     * @param cacheOptions Cache options for the client to make requests. See {@link https://axios-cache-interceptor.js.org/config}
+     * Constructs an instance of the [clubs](https://docs.api.jikan.moe/#tag/clubs) client
+     * @param cacheOptions [Cache options](https://axios-cache-interceptor.js.org/config) for the client to make requests
      */
     constructor(cacheOptions?: CacheOptions) {
         this.#cacheConfig = cacheOptions

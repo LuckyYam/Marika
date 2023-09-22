@@ -5,8 +5,8 @@ import { IGenreConfig, ICommonResource } from '../../types'
 export class Genres {
     #cacheConfig?: CacheOptions
     /**
-     * Constructs an instance of the `genres` client
-     * @param cacheOptions Cache options for the client to make requests. See {@link https://axios-cache-interceptor.js.org/config}
+     * Constructs an instance of the [genres](https://docs.api.jikan.moe/#tag/genres) client
+     * @param cacheOptions [Cache options](https://axios-cache-interceptor.js.org/config) for the client to make requests
      */
     constructor(cacheOptions?: CacheOptions) {
         this.#cacheConfig = cacheOptions
