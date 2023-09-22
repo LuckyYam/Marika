@@ -45,7 +45,9 @@ export interface IMangaUserUpdate extends IUserUpdate {
 }
 
 export interface IMangaFull extends IManga {
+    /** Relations of the manga */
     relations: IRelation[]
+    /** External sites of the manga */
     external: IResource[]
 }
 

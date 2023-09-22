@@ -1,19 +1,13 @@
-import { IExtendedResource, ICommonConfig } from '.'
+import { IExtendedResource, ICommonConfig, ICommonPicture } from '.'
 import { ClubAccess, ClubCategories, Sorting } from '../constants'
 
 export interface IClub {
     /** MyAnimeList ID of the club */
     mal_id: number
-    /** URL of the club */
+    /**MyAnimeList URL of the club */
     url: string
     /** Images of the club */
-    images: {
-        /** Image of the club in the format jpg */
-        jpg: {
-            /** Image URL of the club in the format jpg */
-            image_url: string | null
-        }
-    }
+    images: ICommonPicture
     /** Name of the club */
     name: string
     /** Members count of the club */
@@ -28,13 +22,7 @@ export interface IClub {
 
 export interface IClubMember extends IClubStaff {
     /** Images of the member */
-    images: {
-        /** Image of the member in the format jpg */
-        jpg: {
-            /** Image URL of the member in the format jpg */
-            image_url: string
-        }
-        /** Image of the member in the format webp */
+    images: ICommonPicture & {
         webp: {
             /** Image URL of the member in the format webp */
             image_url: string
@@ -45,7 +33,7 @@ export interface IClubMember extends IClubStaff {
 export interface IClubStaff {
     /** Username of the user */
     username: string
-    /** URL of the user */
+    /** MAL URL of the user */
     url: string
 }
 

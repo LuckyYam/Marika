@@ -1,4 +1,4 @@
-import { IPicture, ISimpleImageResponse, IVoiceActor, ICommonConfig } from '.'
+import { IPicture, ISimpleImageResponse, IVoiceActor, ICommonConfig, ICommonPicture } from '.'
 import { Sorting } from '../constants'
 
 export interface ICharacterFull extends ICharacter {
@@ -13,15 +13,10 @@ export interface ICharacterFull extends ICharacter {
 export interface ICharacter {
     /** MyAnimeList ID of the character */
     mal_id: number
-    /** URL of the character */
+    /** MyAnimeList URL of the character */
     url: string
     /** Images of the character */
-    images: {
-        /** Image of the character in the format jpg */
-        jpg: {
-            /** Image URL of the character in the jpg format */
-            image_url: string
-        }
+    images: ICommonPicture & {
         /** Images of the character in the format webp */
         webp: ISimpleImageResponse
     }

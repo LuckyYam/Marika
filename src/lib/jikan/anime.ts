@@ -290,9 +290,9 @@ export class Anime {
     }
 
     /**
-     * Gets the externals of an anime by its MyAnimeList ID
+     * Gets the external sites of an anime by its MyAnimeList ID
      * @param id MyAnimeList ID of the anime
-     * @returns Externals of the anime
+     * @returns External sites of the anime
      */
     public getAnimeExternal = async (id: string | number): Promise<IAnimeFull['external']> => {
         if (typeof id !== 'string' && typeof id !== 'number')

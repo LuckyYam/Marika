@@ -1,4 +1,4 @@
-import { ICharacterFromSource, ICommonConfig } from '.'
+import { ICharacterFromSource, ICommonConfig, ICommonPicture } from '.'
 import { CharacterSource } from './characters'
 import { Sorting } from '../constants'
 
@@ -14,18 +14,12 @@ export interface IPersonFull extends IPerson {
 export interface IPerson {
     /** MAL ID of the person */
     mal_id: number
-    /** URL of the person in MAL */
+    /** MAL URL of the person */
     url: string
     /** Website URL of the person */
     website_url: string | null
     /** Images of the person */
-    images: {
-        /** Image of the person in jpg format */
-        jpg: {
-            /** Image URL of the person in jpg format */
-            image_url: string | null
-        }
-    }
+    images: ICommonPicture
     /** Name of the person */
     name: string
     /** Given name of the person */

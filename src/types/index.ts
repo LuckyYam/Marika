@@ -54,15 +54,10 @@ export interface IExtendedResource extends IResource {
 export interface IUser {
     /** Username of the user */
     username: string
-    /** URL of the user */
+    /** MAL URL of the user */
     url: string
     /** Images of the user */
-    images: {
-        /** Image of the user in the format jpg */
-        jpg: {
-            /** Image URL of the user in the format jpg */
-            image_url: string | null
-        }
+    images: ICommonPicture & {
         /** Image of the user in the format webp */
         webp: {
             /** Image URL of the user in the format webp */
@@ -79,7 +74,7 @@ export interface ITitle {
 }
 
 export interface IResource {
-    /** URL to the resource */
+    /** MAL URL to the resource */
     url: string
     /** Name of the resource */
     name: string
@@ -117,7 +112,7 @@ export interface ISearchConfig extends ICommonConfig {
 export interface IResponse {
     /** MAL ID of the source */
     mal_id: string
-    /** URL of the source */
+    /** MAL URL of the source */
     url: string
     /** Image URLs of the source */
     images: IPicture
@@ -201,12 +196,7 @@ export interface ICharacterFromSource {
         /** MAL URL to the character */
         url: string
         /** Images of the character in the formats jpg & webp */
-        images: {
-            /** Images of the character in the format jpg */
-            jpg: {
-                /** Image URL of the character in normal size of format jpg */
-                image_url: string | null
-            }
+        images: ICommonPicture & {
             /** Images of the character in the format webp */
             webp: ISimpleImageResponse
         }
@@ -221,7 +211,7 @@ export interface ICommonPicture {
     /** Image of the target in the format jpg */
     jpg: {
         /** Image URL of the target in the format jpg */
-        image_url: string
+        image_url: string | null
     }
 }
 
@@ -232,7 +222,7 @@ export interface IForumConfig {
 export interface IForum {
     /** MAL ID of the forum */
     mal_id: number
-    /** URL to the forum */
+    /** MAL URL to the forum */
     url: string
     /** Title of the forum */
     title: string
@@ -280,7 +270,7 @@ export interface IRecommendation {
     entry: {
         /** MAL ID of the source */
         mal_id: number
-        /** URL of the source */
+        /** MAL URL of the source */
         url: string
         /** Images of the source in the formats webp & jpg */
         images: IPicture
@@ -371,7 +361,7 @@ export interface ICommonResource extends IResource {
 export interface INewsResponse {
     /** MAL ID of the news article */
     mal_id: number
-    /** URL of the news article */
+    /** MAL URL of the news article */
     url: string
     /** Title of the news article */
     title: string
@@ -382,13 +372,7 @@ export interface INewsResponse {
     /** URL of the news article's author */
     author_url: string
     /** Images of the news article */
-    images: {
-        /** Image of the news article in the format jpg */
-        jpg: {
-            /** Image URL of the news article in the format jpg */
-            image_url: string | null
-        }
-    }
+    images: ICommonPicture
     /** Forum URL of the news article */
     forum_url: string
     /** Number of comments in the news article */
@@ -406,3 +390,6 @@ export * from './magazines'
 export * from './manga'
 export * from './people'
 export * from './schedules'
+export * from './producers'
+export * from './recommendations'
+export * from './seasons'

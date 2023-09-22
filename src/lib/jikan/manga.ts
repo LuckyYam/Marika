@@ -196,9 +196,9 @@ export class Manga {
     }
 
     /**
-     * Get externals of a manga from its MyAnimeList ID
+     * Get external sites of a manga from its MyAnimeList ID
      * @param id MyAnimeList ID of the manga
-     * @returns Externals of the manga
+     * @returns External sites of the manga
      */
     public getMangaExternal = async (id: string | number): Promise<IMangaFull['external']> => {
         if (typeof id !== 'string' && typeof id !== 'number')

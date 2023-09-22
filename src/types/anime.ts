@@ -9,9 +9,10 @@ import {
     IReview,
     ISearchConfig,
     IRelation,
-    IUserUpdate
+    IUserUpdate,
+    ICommonPicture
 } from '.'
-import { AnimeStatus, AnimeTypes, Ratings } from '../'
+import { AnimeSeasons, AnimeStatus, AnimeTypes, Ratings } from '../'
 
 export interface IAnimeFull extends IAnime {
     /** Relations of the anime */
@@ -54,7 +55,7 @@ export interface IAnime extends IResponse {
     /** Rating of the anime */
     rating: string
     /** Season which the anime was aired */
-    season: string
+    season: AnimeSeasons
     /** Year which anime was aired */
     year: number
     /** Broadcast data of the anime */
@@ -103,16 +104,10 @@ export interface IAnimeStaff {
     person: {
         /** MAL ID of the staff */
         mal_id: number
-        /** URL to the staff */
+        /** MAL URL to the staff */
         url: string
         /** Images of the staff */
-        images: {
-            /** Images of the staff in the format jpg */
-            jpg: {
-                /** Image url of the staff in the format jpg */
-                image_url: string | null
-            }
-        }
+        images: ICommonPicture
         /** Name of the staff */
         name: string
     }
@@ -165,7 +160,7 @@ export interface IAnimeStatistics {
 export interface IEpisodeFromList extends IBaseEpisodeResponse {
     /** Score of the episode */
     score: number
-    /** Forum URL of the episode */
+    /** MAL forum URL of the episode */
     forum_url: string
 }
 
@@ -203,13 +198,7 @@ export interface IVoiceActor {
         /** MAL URL of the voice actor */
         url: string
         /** Images of the voice actor */
-        images: {
-            /** Images of the voice actor in the format jpg */
-            jpg: {
-                /** Image URL of the voice actor in normal size of format jpg */
-                image_url: string | null
-            }
-        }
+        images: ICommonPicture
         /** Name of the voice actor */
         name: string
     }
@@ -224,16 +213,10 @@ export interface IAnimeVideosEpisode {
     title: string
     /** Episode of the anime in human readable string  */
     episode: string
-    /** URL of the episode */
+    /** MAL URL of the episode */
     url: string
     /** Images of the episode */
-    images: {
-        /** Images of the episode in the format jpg */
-        jpg: {
-            /** Image URL of the episode in the format jpg */
-            image_url: string | null
-        }
-    }
+    images: ICommonPicture
 }
 
 export interface IEpisodeResponse extends IBaseEpisodeResponse {
