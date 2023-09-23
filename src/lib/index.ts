@@ -1,4 +1,2 @@
-export * from './Anime'
-export * from './Manga'
-export * from './Character'
-export * from './Utils'
+export * from './Marika'
+export * from './jikan'

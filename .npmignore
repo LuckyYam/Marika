@@ -1,9 +1,0 @@
-.gitignore
-README.md
-tsconfig.json
-yarn.lock
-.github
-.eslintrc.json
-LICENSE
-src
-.prettierrc.json
