@@ -213,7 +213,7 @@ export class Manga {
      * @returns Search results of the manga
      */
     public getMangaSearch = async (
-        config?: IAnimeSearchConfig
+        config?: IMangaSearchConfig
     ): Promise<{ data: IManga[]; pagination: IExtendedPagination }> =>
         await fetch<{ data: IManga[]; pagination: IExtendedPagination }>(
             getURL('manga').concat(getQueryString<keyof IMangaSearchConfig>(config || {}))
