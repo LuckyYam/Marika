@@ -13,6 +13,7 @@ import {
     Reviews,
     Schedules,
     Seasons,
+    Top,
     Users,
     Watch
 } from './jikan'
@@ -38,6 +39,7 @@ export class Marika {
         this.users = new Users(cacheOptions)
         this.watch = new Watch(cacheOptions)
         this.random = new Random(cacheOptions)
+        this.top = new Top(cacheOptions)
     }
 
     /** Client of [anime](https://docs.api.jikan.moe/#tag/anime) */
@@ -70,4 +72,6 @@ export class Marika {
     public watch: Watch
     /** Client of [random](https://docs.api.jikan.moe/#tag/random) */
     public random: Random
+    /** Client of [top](https://docs.api.jikan.moe/#tag/top) */
+    public top: Top
 }
