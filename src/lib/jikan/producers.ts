@@ -1,15 +1,15 @@
 import { CacheOptions } from 'axios-cache-interceptor'
-import { getURL, fetch, getTypeErrorMessage, getQueryString } from '../../utils'
+import { getURL, Fetch, getTypeErrorMessage, getQueryString } from '../../utils'
 import { IExtendedPagination, IProducer, IProducerFull, IProducerSearchConfig } from '../../types'
 
 export class Producers {
-    #cacheConfig?: CacheOptions
+    #fetch: Fetch['get']
     /**
      * Constructs an instance of the [producers](https://docs.api.jikan.moe/#tag/producers) client
      * @param cacheOptions [Cache options](https://axios-cache-interceptor.js.org/config) for the client to make requests
      */
     constructor(cacheOptions?: CacheOptions) {
-        this.#cacheConfig = cacheOptions
+        this.#fetch = new Fetch(cacheOptions).get
     }
 
     /**
@@ -20,7 +20,7 @@ export class Producers {
     public getProducerById = async (id: string | number): Promise<IProducer> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IProducer }>(getURL('producers', `${id}`), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: IProducer }>(getURL('producers', `${id}`))).data
     }
 
     /**
@@ -31,7 +31,7 @@ export class Producers {
     public getProducerFullById = async (id: string | number): Promise<IProducerFull> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IProducerFull }>(getURL('producers', `${id}`, 'full'), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: IProducerFull }>(getURL('producers', `${id}`, 'full'))).data
     }
 
     /**
@@ -42,12 +42,7 @@ export class Producers {
     public getProducerExternal = async (id: string | number): Promise<IProducerFull['external']> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (
-            await fetch<{ data: IProducerFull['external'] }>(
-                getURL('producers', `${id}`, 'external'),
-                this.#cacheConfig
-            )
-        ).data
+        return (await this.#fetch<{ data: IProducerFull['external'] }>(getURL('producers', `${id}`, 'external'))).data
     }
 
     /**
@@ -58,8 +53,7 @@ export class Producers {
     public getProducers = async (
         config?: IProducerSearchConfig
     ): Promise<{ pagination: IExtendedPagination; data: IProducer[] }> =>
-        await fetch<{ pagination: IExtendedPagination; data: IProducer[] }>(
-            getURL('producers').concat(getQueryString<keyof IProducerSearchConfig>(config || {})),
-            this.#cacheConfig
+        await this.#fetch<{ pagination: IExtendedPagination; data: IProducer[] }>(
+            getURL('producers').concat(getQueryString<keyof IProducerSearchConfig>(config || {}))
         )
 }

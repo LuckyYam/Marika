@@ -1,15 +1,15 @@
 import { CacheOptions } from 'axios-cache-interceptor'
 import { IExtendedPagination, IReview, IReviewConfig } from '../../types'
-import { fetch, getQueryString, getURL } from '../../utils'
+import { Fetch, getQueryString, getURL } from '../../utils'
 
 export class Reviews {
-    #cacheConfig?: CacheOptions
+    #fetch: Fetch['get']
     /**
      * Constructs an instance of the [reviews](https://docs.api.jikan.moe/#tag/reviews) client
      * @param cacheOptions [Cache options](https://axios-cache-interceptor.js.org/config) for the client to make requests
      */
     constructor(cacheOptions?: CacheOptions) {
-        this.#cacheConfig = cacheOptions
+        this.#fetch = new Fetch(cacheOptions).get
     }
 
     /**
@@ -20,9 +20,8 @@ export class Reviews {
     public getRecentAnimeReviews = async (
         config?: IReviewConfig
     ): Promise<{ pagination: IExtendedPagination; data: IReview[] }> =>
-        await fetch<{ pagination: IExtendedPagination; data: IReview[] }>(
-            getURL('reviews', 'anime').concat(getQueryString<keyof IReviewConfig>(config || {})),
-            this.#cacheConfig
+        await this.#fetch<{ pagination: IExtendedPagination; data: IReview[] }>(
+            getURL('reviews', 'anime').concat(getQueryString<keyof IReviewConfig>(config || {}))
         )
 
     /**
@@ -33,8 +32,7 @@ export class Reviews {
     public getRecentMangaReviews = async (
         config?: IReviewConfig
     ): Promise<{ pagination: IExtendedPagination; data: IReview[] }> =>
-        await fetch<{ pagination: IExtendedPagination; data: IReview[] }>(
-            getURL('reviews', 'manga').concat(getQueryString<keyof IReviewConfig>(config || {})),
-            this.#cacheConfig
+        await this.#fetch<{ pagination: IExtendedPagination; data: IReview[] }>(
+            getURL('reviews', 'manga').concat(getQueryString<keyof IReviewConfig>(config || {}))
         )
 }

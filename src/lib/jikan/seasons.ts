@@ -1,16 +1,16 @@
 import { CacheOptions } from 'axios-cache-interceptor'
-import { getTypeErrorMessage, getQueryString, getURL, fetch } from '../../utils'
+import { getTypeErrorMessage, getQueryString, getURL, Fetch } from '../../utils'
 import { ISeasonConfig, ISeasonList, ISeasonResponse } from '../../types'
 import { AnimeSeasons } from '../../constants'
 
 export class Seasons {
-    #cacheConfig?: CacheOptions
+    #fetch: Fetch['get']
     /**
      * Constructs an instance of the [seasons](https://docs.api.jikan.moe/#tag/seasons) client
      * @param cacheOptions [Cache options](https://axios-cache-interceptor.js.org/config) for the client to make requests
      */
     constructor(cacheOptions?: CacheOptions) {
-        this.#cacheConfig = cacheOptions
+        this.#fetch = new Fetch(cacheOptions).get
     }
 
     /**
@@ -19,9 +19,8 @@ export class Seasons {
      * @returns List of current season's anime
      */
     public getSeasonNow = async (config?: ISeasonConfig): Promise<ISeasonResponse> =>
-        await fetch<ISeasonResponse>(
-            getURL('seasons', 'now').concat(getQueryString<keyof ISeasonConfig>(config || {})),
-            this.#cacheConfig
+        await this.#fetch<ISeasonResponse>(
+            getURL('seasons', 'now').concat(getQueryString<keyof ISeasonConfig>(config || {}))
         )
 
     /**
@@ -39,9 +38,8 @@ export class Seasons {
         if (typeof year !== 'string' && typeof year !== 'number')
             throw new TypeError(getTypeErrorMessage('year', 'string or number', typeof year))
         if (typeof season !== 'string') throw new TypeError(getTypeErrorMessage('season', 'string', typeof season))
-        return await fetch<ISeasonResponse>(
-            getURL('seasons', `${year}`, `${season}`).concat(getQueryString<keyof ISeasonConfig>(config || {})),
-            this.#cacheConfig
+        return await this.#fetch<ISeasonResponse>(
+            getURL('seasons', `${year}`, `${season}`).concat(getQueryString<keyof ISeasonConfig>(config || {}))
         )
     }
 
@@ -50,7 +48,7 @@ export class Seasons {
      * @returns List of available seasons of all the years
      */
     public getSeasonsList = async (): Promise<ISeasonList[]> =>
-        (await fetch<{ data: ISeasonList[] }>(getURL('seasons'), this.#cacheConfig)).data
+        (await this.#fetch<{ data: ISeasonList[] }>(getURL('seasons'))).data
 
     /**
      * Gets the list of upcoming anime of the current season
@@ -58,8 +56,7 @@ export class Seasons {
      * @returns The list of upcoming anime of the current season
      */
     public getSeasonUpcoming = async (config?: ISeasonConfig): Promise<ISeasonResponse> =>
-        await fetch<ISeasonResponse>(
-            getURL('seasons', 'upcoming').concat(getQueryString<keyof ISeasonConfig>(config || {})),
-            this.#cacheConfig
+        await this.#fetch<ISeasonResponse>(
+            getURL('seasons', 'upcoming').concat(getQueryString<keyof ISeasonConfig>(config || {}))
         )
 }

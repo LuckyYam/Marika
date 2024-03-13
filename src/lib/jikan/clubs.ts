@@ -1,5 +1,5 @@
 import { CacheOptions } from 'axios-cache-interceptor'
-import { fetch, getQueryString, getTypeErrorMessage, getURL } from '../../utils'
+import { Fetch, getQueryString, getTypeErrorMessage, getURL } from '../../utils'
 import {
     IClub,
     IClubMember,
@@ -11,13 +11,13 @@ import {
 } from '../../types'
 
 export class Clubs {
-    #cacheConfig?: CacheOptions
+    #fetch: Fetch['get']
     /**
      * Constructs an instance of the [clubs](https://docs.api.jikan.moe/#tag/clubs) client
      * @param cacheOptions [Cache options](https://axios-cache-interceptor.js.org/config) for the client to make requests
      */
     constructor(cacheOptions?: CacheOptions) {
-        this.#cacheConfig = cacheOptions
+        this.#fetch = new Fetch(cacheOptions).get
     }
 
     /**
@@ -28,7 +28,7 @@ export class Clubs {
     public getClubsById = async (id: string | number): Promise<IClub> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IClub }>(getURL('clubs', `${id}`), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: IClub }>(getURL('clubs', `${id}`))).data
     }
 
     /**
@@ -42,9 +42,8 @@ export class Clubs {
     ): Promise<{ pagination: IPagination; data: IClubMember[] }> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return await fetch<{ data: IClubMember[]; pagination: IPagination }>(
-            getURL('clubs', `${id}`, 'members').concat(getQueryString<keyof ICommonConfig>(config || {})),
-            this.#cacheConfig
+        return await this.#fetch<{ data: IClubMember[]; pagination: IPagination }>(
+            getURL('clubs', `${id}`, 'members').concat(getQueryString<keyof ICommonConfig>(config || {}))
         )
     }
 
@@ -56,7 +55,7 @@ export class Clubs {
     public getClubStaff = async (id: string | number): Promise<IClubStaff[]> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IClubStaff[] }>(getURL('clubs', `${id}`, 'staff'))).data
+        return (await this.#fetch<{ data: IClubStaff[] }>(getURL('clubs', `${id}`, 'staff'))).data
     }
 
     /**
@@ -67,7 +66,7 @@ export class Clubs {
     public getClubRelations = async (id: string | number): Promise<IClubRelations> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IClubRelations }>(getURL('clubs', `${id}`, 'relations'))).data
+        return (await this.#fetch<{ data: IClubRelations }>(getURL('clubs', `${id}`, 'relations'))).data
     }
 
     /**
@@ -76,7 +75,7 @@ export class Clubs {
      * @returns Search results of the clubs
      */
     public getClubsSearch = async (config?: IClubSearchConfig) =>
-        await fetch<{ data: IClub[]; pagination: IPagination }>(
+        await this.#fetch<{ data: IClub[]; pagination: IPagination }>(
             getURL('clubs').concat(getQueryString<keyof IClubSearchConfig>(config || {}))
         )
 }

@@ -1,5 +1,5 @@
 import { CacheOptions } from 'axios-cache-interceptor'
-import { fetch, getURL, getTypeErrorMessage, getQueryString } from '../../utils'
+import { Fetch, getURL, getTypeErrorMessage, getQueryString } from '../../utils'
 import {
     ICharacterFromSource,
     ICommonConfig,
@@ -15,20 +15,19 @@ import {
     IRecommendation,
     IMangaReview,
     IReviewConfig,
-    IAnimeSearchConfig,
     IExtendedPagination,
     IMangaSearchConfig,
     IForumConfig
 } from '../../types'
 
 export class Manga {
-    #cacheConfig?: CacheOptions
+    #fetch: Fetch['get']
     /**
      * Constructs an instance of the [manga](https://docs.api.jikan.moe/#tag/manga) client
      * @param cacheOptions [Cache options](https://axios-cache-interceptor.js.org/config) for the client to make requests
      */
     constructor(cacheOptions?: CacheOptions) {
-        this.#cacheConfig = cacheOptions
+        this.#fetch = new Fetch(cacheOptions).get
     }
 
     /**
@@ -39,7 +38,7 @@ export class Manga {
     public getMangaById = async (id: string | number): Promise<IManga> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IManga }>(getURL('manga', `${id}`), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: IManga }>(getURL('manga', `${id}`))).data
     }
 
     /**
@@ -50,7 +49,7 @@ export class Manga {
     public getMangaFullById = async (id: string | number): Promise<IMangaFull> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IMangaFull }>(getURL('manga', `${id}`, 'full'), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: IMangaFull }>(getURL('manga', `${id}`, 'full'))).data
     }
 
     /**
@@ -61,9 +60,7 @@ export class Manga {
     public getMangaCharacters = async (id: string | number): Promise<ICharacterFromSource[]> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (
-            await fetch<{ data: ICharacterFromSource[] }>(getURL('manga', `${id}`, 'characters'), this.#cacheConfig)
-        ).data
+        return (await this.#fetch<{ data: ICharacterFromSource[] }>(getURL('manga', `${id}`, 'characters'))).data
     }
 
     /**
@@ -78,9 +75,8 @@ export class Manga {
     ): Promise<{ data: INewsResponse[]; pagination: IPagination }> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return await fetch<{ data: INewsResponse[]; pagination: IPagination }>(
-            getURL('manga', `${id}`, 'news').concat(getQueryString<keyof ICommonConfig>(config || {})),
-            this.#cacheConfig
+        return await this.#fetch<{ data: INewsResponse[]; pagination: IPagination }>(
+            getURL('manga', `${id}`, 'news').concat(getQueryString<keyof ICommonConfig>(config || {}))
         )
     }
 
@@ -93,9 +89,8 @@ export class Manga {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
         return (
-            await fetch<{ data: IForum[] }>(
-                getURL('manga', `${id}`, 'forum').concat(getQueryString<keyof IForumConfig>(config || {})),
-                this.#cacheConfig
+            await this.#fetch<{ data: IForum[] }>(
+                getURL('manga', `${id}`, 'forum').concat(getQueryString<keyof IForumConfig>(config || {}))
             )
         ).data
     }
@@ -108,7 +103,7 @@ export class Manga {
     public getMangaPictures = async (id: string | number): Promise<IPicture[]> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IPicture[] }>(getURL('manga', `${id}`, 'pictures'), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: IPicture[] }>(getURL('manga', `${id}`, 'pictures'))).data
     }
 
     /**
@@ -119,7 +114,7 @@ export class Manga {
     public getMangaStatistics = async (id: string | number): Promise<IMangaStatistics> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IMangaStatistics }>(getURL('manga', `${id}`, 'statistics'), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: IMangaStatistics }>(getURL('manga', `${id}`, 'statistics'))).data
     }
 
     /**
@@ -130,7 +125,7 @@ export class Manga {
     public getMangaMoreInfo = async (id: string | number): Promise<IMoreInfo> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IMoreInfo }>(getURL('manga', `${id}`, 'moreinfo'), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: IMoreInfo }>(getURL('manga', `${id}`, 'moreinfo'))).data
     }
 
     /**
@@ -141,9 +136,7 @@ export class Manga {
     public getMangaRecommendations = async (id: string | number): Promise<IRecommendation[]> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (
-            await fetch<{ data: IRecommendation[] }>(getURL('manga', `${id}`, 'recommendations'), this.#cacheConfig)
-        ).data
+        return (await this.#fetch<{ data: IRecommendation[] }>(getURL('manga', `${id}`, 'recommendations'))).data
     }
 
     /**
@@ -158,9 +151,8 @@ export class Manga {
     ): Promise<{ data: IMangaUserUpdate[]; pagination: IPagination }> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return await fetch<{ data: IMangaUserUpdate[]; pagination: IPagination }>(
-            getURL('manga', `${id}`, 'userupdates').concat(getQueryString<keyof ICommonConfig>(config || {})),
-            this.#cacheConfig
+        return await this.#fetch<{ data: IMangaUserUpdate[]; pagination: IPagination }>(
+            getURL('manga', `${id}`, 'userupdates').concat(getQueryString<keyof ICommonConfig>(config || {}))
         )
     }
 
@@ -176,9 +168,8 @@ export class Manga {
     ): Promise<{ data: IMangaReview[]; pagination: IPagination }> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return await fetch<{ pagination: IPagination; data: IMangaReview[] }>(
-            getURL('manga', `${id}`, 'reviews').concat(getQueryString<keyof IReviewConfig>(config || {})),
-            this.#cacheConfig
+        return await this.#fetch<{ pagination: IPagination; data: IMangaReview[] }>(
+            getURL('manga', `${id}`, 'reviews').concat(getQueryString<keyof IReviewConfig>(config || {}))
         )
     }
 
@@ -190,9 +181,7 @@ export class Manga {
     public getMangaRelations = async (id: string | number): Promise<IMangaFull['relations']> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (
-            await fetch<{ data: IMangaFull['relations'] }>(getURL('manga', `${id}`, 'relations'), this.#cacheConfig)
-        ).data
+        return (await this.#fetch<{ data: IMangaFull['relations'] }>(getURL('manga', `${id}`, 'relations'))).data
     }
 
     /**
@@ -203,8 +192,7 @@ export class Manga {
     public getMangaExternal = async (id: string | number): Promise<IMangaFull['external']> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IMangaFull['external'] }>(getURL('manga', `${id}`, 'external'), this.#cacheConfig))
-            .data
+        return (await this.#fetch<{ data: IMangaFull['external'] }>(getURL('manga', `${id}`, 'external'))).data
     }
 
     /**
@@ -215,7 +203,7 @@ export class Manga {
     public getMangaSearch = async (
         config?: IMangaSearchConfig
     ): Promise<{ data: IManga[]; pagination: IExtendedPagination }> =>
-        await fetch<{ data: IManga[]; pagination: IExtendedPagination }>(
+        await this.#fetch<{ data: IManga[]; pagination: IExtendedPagination }>(
             getURL('manga').concat(getQueryString<keyof IMangaSearchConfig>(config || {}))
         )
 }

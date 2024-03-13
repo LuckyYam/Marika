@@ -111,7 +111,7 @@ export interface ISearchConfig extends ICommonConfig {
 
 export interface IResponse {
     /** MAL ID of the source */
-    mal_id: string
+    mal_id: number
     /** MAL URL of the source */
     url: string
     /** Image URLs of the source */

@@ -1,15 +1,15 @@
 import { CacheOptions } from 'axios-cache-interceptor'
 import { ICommonPicture, IExtendedPagination, IPerson, IPersonFull, IPersonSearchConfig } from '../../types'
-import { fetch, getQueryString, getTypeErrorMessage, getURL } from '../../utils'
+import { Fetch, getQueryString, getTypeErrorMessage, getURL } from '../../utils'
 
 export class People {
-    #cacheConfig?: CacheOptions
+    #fetch: Fetch['get']
     /**
      * Constructs an instance of the [people](https://docs.api.jikan.moe/#tag/people) client
      * @param cacheOptions [Cache options](https://axios-cache-interceptor.js.org/config) for the client to make requests
      */
     constructor(cacheOptions?: CacheOptions) {
-        this.#cacheConfig = cacheOptions
+        this.#fetch = new Fetch(cacheOptions).get
     }
 
     /**
@@ -20,7 +20,7 @@ export class People {
     public getPersonById = async (id: string | number): Promise<IPerson> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IPerson }>(getURL('people', `${id}`), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: IPerson }>(getURL('people', `${id}`))).data
     }
 
     /**
@@ -31,7 +31,7 @@ export class People {
     public getPersonByIdFull = async (id: string | number): Promise<IPersonFull> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IPersonFull }>(getURL('people', `${id}`, 'full'), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: IPersonFull }>(getURL('people', `${id}`, 'full'))).data
     }
 
     /**
@@ -42,7 +42,7 @@ export class People {
     public getPersonAnime = async (id: string | number): Promise<IPersonFull['anime']> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IPersonFull['anime'] }>(getURL('people', `${id}`, 'anime'), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: IPersonFull['anime'] }>(getURL('people', `${id}`, 'anime'))).data
     }
 
     /**
@@ -53,8 +53,7 @@ export class People {
     public getPersonVoices = async (id: string | number): Promise<IPersonFull['voices']> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IPersonFull['voices'] }>(getURL('people', `${id}`, 'voices'), this.#cacheConfig))
-            .data
+        return (await this.#fetch<{ data: IPersonFull['voices'] }>(getURL('people', `${id}`, 'voices'))).data
     }
 
     /**
@@ -65,7 +64,7 @@ export class People {
     public getPersonManga = async (id: string | number): Promise<IPersonFull['manga']> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IPersonFull['manga'] }>(getURL('people', `${id}`, 'manga'), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: IPersonFull['manga'] }>(getURL('people', `${id}`, 'manga'))).data
     }
 
     /**
@@ -76,7 +75,7 @@ export class People {
     public getPersonPictures = async (id: string | number): Promise<ICommonPicture[]> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: ICommonPicture[] }>(getURL('people', `${id}`, 'pictures'), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: ICommonPicture[] }>(getURL('people', `${id}`, 'pictures'))).data
     }
 
     /**
@@ -87,8 +86,7 @@ export class People {
     public getPeopleSearch = async (
         config?: IPersonSearchConfig
     ): Promise<{ pagination: IExtendedPagination; data: IPerson[] }> =>
-        await fetch<{ pagination: IExtendedPagination; data: IPerson[] }>(
-            getURL('people').concat(getQueryString<keyof IPersonSearchConfig>(config || {})),
-            this.#cacheConfig
+        await this.#fetch<{ pagination: IExtendedPagination; data: IPerson[] }>(
+            getURL('people').concat(getQueryString<keyof IPersonSearchConfig>(config || {}))
         )
 }

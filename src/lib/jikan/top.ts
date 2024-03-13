@@ -12,16 +12,16 @@ import {
     IMangaReview,
     IAnimeReview
 } from '../../types'
-import { fetch, getQueryString, getURL } from '../../utils'
+import { Fetch, getQueryString, getURL } from '../../utils'
 
 export class Top {
-    #cacheConfig?: CacheOptions
+    #fetch: Fetch['get']
     /**
      * Constructs an instance of the [top](https://docs.api.jikan.moe/#tag/top) client
      * @param cacheOptions [Cache options](https://axios-cache-interceptor.js.org/config) for the client to make requests
      */
     constructor(cacheOptions?: CacheOptions) {
-        this.#cacheConfig = cacheOptions
+        this.#fetch = new Fetch(cacheOptions).get
     }
 
     /**
@@ -32,9 +32,8 @@ export class Top {
     public getTopAnime = async (
         config?: ITopAnimeConfig
     ): Promise<{ pagination: IExtendedPagination; data: IAnime[] }> =>
-        await fetch<{ pagination: IExtendedPagination; data: IAnime[] }>(
-            getURL('top', 'anime').concat(getQueryString<keyof ITopAnimeConfig>(config || {})),
-            this.#cacheConfig
+        await this.#fetch<{ pagination: IExtendedPagination; data: IAnime[] }>(
+            getURL('top', 'anime').concat(getQueryString<keyof ITopAnimeConfig>(config || {}))
         )
 
     /**
@@ -45,9 +44,8 @@ export class Top {
     public getTopManga = async (
         config?: ITopMangaConfig
     ): Promise<{ pagination: IExtendedPagination; data: IManga[] }> =>
-        await fetch<{ pagination: IExtendedPagination; data: IManga[] }>(
-            getURL('top', 'manga').concat(getQueryString<keyof ITopMangaConfig>(config || {})),
-            this.#cacheConfig
+        await this.#fetch<{ pagination: IExtendedPagination; data: IManga[] }>(
+            getURL('top', 'manga').concat(getQueryString<keyof ITopMangaConfig>(config || {}))
         )
 
     /**
@@ -58,9 +56,8 @@ export class Top {
     public getTopPeople = async (
         config?: ITopCommonConfig
     ): Promise<{ pagination: IExtendedPagination; data: IPerson[] }> =>
-        await fetch<{ pagination: IExtendedPagination; data: IPerson[] }>(
-            getURL('top', 'people').concat(getQueryString<keyof ITopCommonConfig>(config || {})),
-            this.#cacheConfig
+        await this.#fetch<{ pagination: IExtendedPagination; data: IPerson[] }>(
+            getURL('top', 'people').concat(getQueryString<keyof ITopCommonConfig>(config || {}))
         )
 
     /**
@@ -71,9 +68,8 @@ export class Top {
     public getTopCharacters = async (
         config?: ITopCommonConfig
     ): Promise<{ pagination: IExtendedPagination; data: ICharacter[] }> =>
-        await fetch<{ pagination: IExtendedPagination; data: ICharacter[] }>(
-            getURL('top', 'characters').concat(getQueryString<keyof ITopCommonConfig>(config || {})),
-            this.#cacheConfig
+        await this.#fetch<{ pagination: IExtendedPagination; data: ICharacter[] }>(
+            getURL('top', 'characters').concat(getQueryString<keyof ITopCommonConfig>(config || {}))
         )
 
     /**
@@ -84,8 +80,7 @@ export class Top {
     public getTopReviews = async (
         config?: ITopReviewConfig
     ): Promise<{ pagination: IExtendedPagination; data: (IAnimeReview | IMangaReview)[] }> =>
-        await fetch<{ pagination: IExtendedPagination; data: (IAnimeReview | IMangaReview)[] }>(
-            getURL('top', 'reviews').concat(getQueryString<keyof ITopReviewConfig>(config || {})),
-            this.#cacheConfig
+        await this.#fetch<{ pagination: IExtendedPagination; data: (IAnimeReview | IMangaReview)[] }>(
+            getURL('top', 'reviews').concat(getQueryString<keyof ITopReviewConfig>(config || {}))
         )
 }

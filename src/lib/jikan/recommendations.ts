@@ -1,15 +1,15 @@
 import { CacheOptions } from 'axios-cache-interceptor'
-import { fetch, getQueryString, getURL } from '../../utils'
+import { Fetch, getQueryString, getURL } from '../../utils'
 import { ICommonConfig, IPagination, IRandomRecommendation } from '../../types'
 
 export class Recommendations {
-    #cacheConfig?: CacheOptions
+    #fetch: Fetch['get']
     /**
      * Constructs an instance of the [recommendations](https://docs.api.jikan.moe/#tag/recommendations) client
      * @param cacheOptions [Cache options](https://axios-cache-interceptor.js.org/config) for the client to make requests
      */
     constructor(cacheOptions?: CacheOptions) {
-        this.#cacheConfig = cacheOptions
+        this.#fetch = new Fetch(cacheOptions).get
     }
 
     /**
@@ -20,9 +20,8 @@ export class Recommendations {
     public getRecentAnimeRecommendations = async (
         config?: ICommonConfig
     ): Promise<{ data: IRandomRecommendation[]; pagination: IPagination }> =>
-        await fetch<{ data: IRandomRecommendation[]; pagination: IPagination }>(
-            getURL('recommendations', 'anime').concat(getQueryString<keyof ICommonConfig>(config || {})),
-            this.#cacheConfig
+        await this.#fetch<{ data: IRandomRecommendation[]; pagination: IPagination }>(
+            getURL('recommendations', 'anime').concat(getQueryString<keyof ICommonConfig>(config || {}))
         )
 
     /**
@@ -33,8 +32,7 @@ export class Recommendations {
     public getRecentMangaRecommendations = async (
         config?: ICommonConfig
     ): Promise<{ data: IRandomRecommendation[]; pagination: IPagination }> =>
-        await fetch<{ data: IRandomRecommendation[]; pagination: IPagination }>(
-            getURL('recommendations', 'manga').concat(getQueryString<keyof ICommonConfig>(config || {})),
-            this.#cacheConfig
+        await this.#fetch<{ data: IRandomRecommendation[]; pagination: IPagination }>(
+            getURL('recommendations', 'manga').concat(getQueryString<keyof ICommonConfig>(config || {}))
         )
 }

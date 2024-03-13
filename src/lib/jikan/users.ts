@@ -17,16 +17,16 @@ import {
     IUserSearchConfig,
     IUserUpdatesResponse
 } from '../../types'
-import { fetch, getQueryString, getTypeErrorMessage, getURL } from '../../utils'
+import { Fetch, getQueryString, getTypeErrorMessage, getURL } from '../../utils'
 
 export class Users {
-    #cacheConfig?: CacheOptions
+    #fetch: Fetch['get']
     /**
      * Constructs an instance of the [users](https://docs.api.jikan.moe/#tag/users) client
      * @param cacheOptions [Cache options](https://axios-cache-interceptor.js.org/config) for the client to make requests
      */
     constructor(cacheOptions?: CacheOptions) {
-        this.#cacheConfig = cacheOptions
+        this.#fetch = new Fetch(cacheOptions).get
     }
 
     /**
@@ -37,9 +37,8 @@ export class Users {
     public getUsersSearch = async (
         config?: IUserSearchConfig
     ): Promise<{ data: IUserBaseRes[]; pagination: IPagination }> =>
-        await fetch<{ data: IUserBaseRes[]; pagination: IPagination }>(
-            getURL('users').concat(getQueryString<keyof IUserSearchConfig>(config || {})),
-            this.#cacheConfig
+        await this.#fetch<{ data: IUserBaseRes[]; pagination: IPagination }>(
+            getURL('users').concat(getQueryString<keyof IUserSearchConfig>(config || {}))
         )
 
     /**
@@ -50,7 +49,7 @@ export class Users {
     public getUserById = async (id: string | number): Promise<IUserById> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: IUserById }>(getURL('users', 'userbyid', `${id}`), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: IUserById }>(getURL('users', 'userbyid', `${id}`))).data
     }
 
     /**
@@ -61,7 +60,7 @@ export class Users {
     public getUserFullProfile = async (username: string): Promise<IUserFull> => {
         if (typeof username !== 'string')
             throw new TypeError(getTypeErrorMessage('username', 'string', typeof username))
-        return (await fetch<{ data: IUserFull }>(getURL('users', username, 'full'), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: IUserFull }>(getURL('users', username, 'full'))).data
     }
 
     /**
@@ -72,7 +71,7 @@ export class Users {
     public getUserProfile = async (username: string): Promise<IUserProfile> => {
         if (typeof username !== 'string')
             throw new TypeError(getTypeErrorMessage('username', 'string', typeof username))
-        return (await fetch<{ data: IUserProfile }>(getURL('users', username), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: IUserProfile }>(getURL('users', username))).data
     }
 
     /**
@@ -83,9 +82,7 @@ export class Users {
     public getUserStatistics = async (username: string): Promise<IUserFull['statistics']> => {
         if (typeof username !== 'string')
             throw new TypeError(getTypeErrorMessage('username', 'string', typeof username))
-        return (
-            await fetch<{ data: IUserFull['statistics'] }>(getURL('users', username, 'statistics'), this.#cacheConfig)
-        ).data
+        return (await this.#fetch<{ data: IUserFull['statistics'] }>(getURL('users', username, 'statistics'))).data
     }
 
     /**
@@ -96,7 +93,7 @@ export class Users {
     public getUserFavorites = async (username: string): Promise<IUserFavorites> => {
         if (typeof username !== 'string')
             throw new TypeError(getTypeErrorMessage('username', 'string', typeof username))
-        return (await fetch<{ data: IUserFavorites }>(getURL('users', username, 'favorites'), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: IUserFavorites }>(getURL('users', username, 'favorites'))).data
     }
 
     /**
@@ -107,9 +104,7 @@ export class Users {
     public getUserUpdates = async (username: string): Promise<IUserUpdatesResponse> => {
         if (typeof username !== 'string')
             throw new TypeError(getTypeErrorMessage('username', 'string', typeof username))
-        return (
-            await fetch<{ data: IUserUpdatesResponse }>(getURL('users', username, 'userupdates'), this.#cacheConfig)
-        ).data
+        return (await this.#fetch<{ data: IUserUpdatesResponse }>(getURL('users', username, 'userupdates'))).data
     }
 
     /**
@@ -120,7 +115,7 @@ export class Users {
     public getUserAbout = async (username: string): Promise<IUserAbout> => {
         if (typeof username !== 'string')
             throw new TypeError(getTypeErrorMessage('username', 'string', typeof username))
-        return (await fetch<{ data: IUserAbout }>(getURL('users', username, 'about'), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: IUserAbout }>(getURL('users', username, 'about'))).data
     }
 
     /**
@@ -133,9 +128,8 @@ export class Users {
         if (typeof username !== 'string')
             throw new TypeError(getTypeErrorMessage('username', 'string', typeof username))
         return (
-            await fetch<{ data: IUserHistory[] }>(
-                getURL('users', username, 'history').concat(getQueryString<keyof IUserHistoryConfig>(config || {})),
-                this.#cacheConfig
+            await this.#fetch<{ data: IUserHistory[] }>(
+                getURL('users', username, 'history').concat(getQueryString<keyof IUserHistoryConfig>(config || {}))
             )
         ).data
     }
@@ -152,9 +146,8 @@ export class Users {
     ): Promise<{ data: IUserFriend[]; pagination: IPagination }> => {
         if (typeof username !== 'string')
             throw new TypeError(getTypeErrorMessage('username', 'string', typeof username))
-        return await fetch<{ data: IUserFriend[]; pagination: IPagination }>(
-            getURL('users', username, 'friends').concat(getQueryString<keyof ICommonConfig>(config || {})),
-            this.#cacheConfig
+        return await this.#fetch<{ data: IUserFriend[]; pagination: IPagination }>(
+            getURL('users', username, 'friends').concat(getQueryString<keyof ICommonConfig>(config || {}))
         )
     }
 
@@ -170,9 +163,8 @@ export class Users {
     ): Promise<{ data: IUserReview[]; pagination: IPagination }> => {
         if (typeof username !== 'string')
             throw new TypeError(getTypeErrorMessage('username', 'string', typeof username))
-        return await fetch<{ data: IUserReview[]; pagination: IPagination }>(
-            getURL('users', username, 'reviews').concat(getQueryString<keyof ICommonConfig>(config || {})),
-            this.#cacheConfig
+        return await this.#fetch<{ data: IUserReview[]; pagination: IPagination }>(
+            getURL('users', username, 'reviews').concat(getQueryString<keyof ICommonConfig>(config || {}))
         )
     }
 
@@ -188,9 +180,8 @@ export class Users {
     ): Promise<{ data: IRandomRecommendation[]; pagination: IPagination }> => {
         if (typeof username !== 'string')
             throw new TypeError(getTypeErrorMessage('username', 'string', typeof username))
-        return await fetch<{ data: IRandomRecommendation[]; pagination: IPagination }>(
-            getURL('users', username, 'recommendations').concat(getQueryString<keyof ICommonConfig>(config || {})),
-            this.#cacheConfig
+        return await this.#fetch<{ data: IRandomRecommendation[]; pagination: IPagination }>(
+            getURL('users', username, 'recommendations').concat(getQueryString<keyof ICommonConfig>(config || {}))
         )
     }
 
@@ -206,9 +197,8 @@ export class Users {
     ): Promise<{ data: IUserClub[]; pagination: IPagination }> => {
         if (typeof username !== 'string')
             throw new TypeError(getTypeErrorMessage('username', 'string', typeof username))
-        return await fetch<{ data: IUserClub[]; pagination: IPagination }>(
-            getURL('users', username, 'clubs').concat(getQueryString<keyof ICommonConfig>(config || {})),
-            this.#cacheConfig
+        return await this.#fetch<{ data: IUserClub[]; pagination: IPagination }>(
+            getURL('users', username, 'clubs').concat(getQueryString<keyof ICommonConfig>(config || {}))
         )
     }
 
@@ -220,7 +210,6 @@ export class Users {
     public getUserExternal = async (username: string): Promise<IUserFull['external']> => {
         if (typeof username !== 'string')
             throw new TypeError(getTypeErrorMessage('username', 'string', typeof username))
-        return (await fetch<{ data: IUserFull['external'] }>(getURL('users', username, 'external'), this.#cacheConfig))
-            .data
+        return (await this.#fetch<{ data: IUserFull['external'] }>(getURL('users', username, 'external'))).data
     }
 }

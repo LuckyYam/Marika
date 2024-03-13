@@ -1,15 +1,15 @@
 import { CacheOptions } from 'axios-cache-interceptor'
 import { ICharacter, ICharacterFull, ICommonPicture, ICharacterSearchConfig, IExtendedPagination } from '../../types'
-import { fetch, getURL, getQueryString, getTypeErrorMessage } from '../../utils'
+import { Fetch, getURL, getQueryString, getTypeErrorMessage } from '../../utils'
 
 export class Characters {
-    #cacheConfig?: CacheOptions
+    #fetch: Fetch['get']
     /**
      * Constructs an instance of the [characters](https://docs.api.jikan.moe/#tag/characters) client
      * @param cacheOptions [Cache options](https://axios-cache-interceptor.js.org/config) for the client to make requests
      */
     constructor(cacheOptions?: CacheOptions) {
-        this.#cacheConfig = cacheOptions
+        this.#fetch = new Fetch(cacheOptions).get
     }
 
     /**
@@ -20,7 +20,7 @@ export class Characters {
     public getCharacterById = async (id: string | number): Promise<ICharacter> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: ICharacter }>(getURL('characters', `${id}`), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: ICharacter }>(getURL('characters', `${id}`))).data
     }
 
     /**
@@ -31,7 +31,7 @@ export class Characters {
     public getCharacterFullById = async (id: string | number): Promise<ICharacterFull> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: ICharacterFull }>(getURL('characters', `${id}`, 'full'), this.#cacheConfig)).data
+        return (await this.#fetch<{ data: ICharacterFull }>(getURL('characters', `${id}`, 'full'))).data
     }
 
     /**
@@ -42,9 +42,7 @@ export class Characters {
     public getCharacterAnime = async (id: string | number): Promise<ICharacterFull['anime']> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (
-            await fetch<{ data: ICharacterFull['anime'] }>(getURL('characters', `${id}`, 'anime'), this.#cacheConfig)
-        ).data
+        return (await this.#fetch<{ data: ICharacterFull['anime'] }>(getURL('characters', `${id}`, 'anime'))).data
     }
 
     /**
@@ -55,9 +53,7 @@ export class Characters {
     public getCharacterManga = async (id: string | number): Promise<ICharacterFull['manga']> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (
-            await fetch<{ data: ICharacterFull['manga'] }>(getURL('characters', `${id}`, 'manga'), this.#cacheConfig)
-        ).data
+        return (await this.#fetch<{ data: ICharacterFull['manga'] }>(getURL('characters', `${id}`, 'manga'))).data
     }
 
     /**
@@ -68,9 +64,7 @@ export class Characters {
     public getCharacterVoiceActors = async (id: number | string): Promise<ICharacterFull['voices']> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (
-            await fetch<{ data: ICharacterFull['voices'] }>(getURL('characters', `${id}`, 'voices'), this.#cacheConfig)
-        ).data
+        return (await this.#fetch<{ data: ICharacterFull['voices'] }>(getURL('characters', `${id}`, 'voices'))).data
     }
 
     /**
@@ -81,8 +75,7 @@ export class Characters {
     public getCharacterPictures = async (id: string | number): Promise<ICommonPicture[]> => {
         if (typeof id !== 'string' && typeof id !== 'number')
             throw new TypeError(getTypeErrorMessage('id', 'string or number', typeof id))
-        return (await fetch<{ data: ICommonPicture[] }>(getURL('characters', `${id}`, 'pictures'), this.#cacheConfig))
-            .data
+        return (await this.#fetch<{ data: ICommonPicture[] }>(getURL('characters', `${id}`, 'pictures'))).data
     }
 
     /**
@@ -93,8 +86,7 @@ export class Characters {
     public getCharactersSearch = async (
         config?: ICharacterSearchConfig
     ): Promise<{ data: ICharacter[]; pagination: IExtendedPagination }> =>
-        await fetch<{ data: ICharacter[]; pagination: IExtendedPagination }>(
-            getURL('characters').concat(getQueryString<keyof ICharacterSearchConfig>(config || {})),
-            this.#cacheConfig
+        await this.#fetch<{ data: ICharacter[]; pagination: IExtendedPagination }>(
+            getURL('characters').concat(getQueryString<keyof ICharacterSearchConfig>(config || {}))
         )
 }

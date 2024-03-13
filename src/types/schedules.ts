@@ -11,5 +11,5 @@ export interface IScheduleConfig extends ICommonConfig {
     /** When its value is true, it will include the unapproved entries */
     unapproved?: boolean
     /** Limit of the entries per page */
-    limit?: boolean
+    limit?: number
 }
